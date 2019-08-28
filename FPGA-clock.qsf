@@ -1,3 +1,4 @@
+set_global_assignment -name TOP_LEVEL_ENTITY "FPGA-clock"
 #============================================================
 # Build by Altera University Program
 #============================================================
