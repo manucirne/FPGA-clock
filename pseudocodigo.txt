@@ -1,0 +1,156 @@
+Glossário 
+valend = variável que representa o valor contido no resgitrador e atrelado a ele - se muda o valor aqui muda no registrador (ponteiro)
+OUT = variável que representa a saída para os displays - valor no endereço do I/O - apenas escrita
+IN = variável que vem do I/O apenas de leitura - valor inicial como zero só para representar. Ela será colocada em um registrador 
+    e lida com flipflop
+
+valend horadezena = 0
+valend horadezena12 = 0
+valend horaunidade = 0
+valend minutodezena = 0
+valend minutounidade = 0
+valend segundodezena = 0
+valend segundounidade = 0
+
+valend horadezenacron = 0
+valend horaunidadecron = 0
+valend minutodezenacron = 0
+valend minutounidadecron = 0
+valend segundodezenacron = 0
+valend segundounidadecron = 0
+
+//para hora de 12 em 12
+valend AMPM = 0 //diz que é hora de 12 em 12 - mostra valor do endereço horades12 (chave)
+valend ledAM = 0 // resgistrador que guarda valor do led
+OUT ledAMout = 0 //valor no I/O que guarda o ledAM
+
+//resgistrador com "flag" de segundo
+valend IN seg = 0 //vem do I/O - contagem em flipflop interno dessa entidade
+
+//botões pro cronômetro entrada I/O
+valend IN chavecron = 0
+valend IN butvaicron = 0
+valend IN butparacron = 0
+valend IN butzeracron = 0
+
+//chaves de ajuste entrada I/O
+valend IN chavehora = 0
+valend IN chavemin = 0
+valend IN chaveseg = 0
+
+//diplays de sete seguimentos saída I/O
+OUT vetor diplay = [0,0,0,0,0,0]
+
+//contagem de segundo e verificação (quando ultrapassa o valor máximo que deve ser colocado no display zera e soma no próximo)
+função contaHora(horadez, horadez12,horauni,mindez,minuni,segdez,seguni,seg,ledAM):
+    se seg:
+        seguni++
+        se seguni = 10:
+            seguni = 0
+            segdez++
+            se segdez = 6:
+                segdez = 0
+                minuni++
+                se minuni = 10:
+                    minuni = 0
+                    mindez++
+                    se mindez = 6:
+                        mindez = 0
+                        horauni++
+                        se horauni = 10:
+                            horauni = 0
+                            horadez++
+                            horades12++
+                            se horadez = 24:
+                                horadez = 0
+                            se horadez12 = 24:
+                                horades12 = 1
+                                ledAM = inverte ledAM
+
+
+//cronometro usa a função de contagem de hora, mas tem botões vai/pause e zera (muda diretamente nos registradores reservados para o cronômetro)
+função cronometro(vai, zera, horadezenacron, horaunidadecron, minutodezenacron, minutounidadecron, segundodezenacron, segundounidadecron, seg):
+    enquanto vai:
+        contaHora(horadezenacron,horaunidadecron,minutodezenacron, minutounidadecron,segundodezenacron,segundounidadecron,seg, 0)
+    se zera:
+        horadezenacron, horaunidadecron, minutodezenacron, minutounidadecron, segundodezenacron, segundounidadecron = 0
+
+
+//Função para ajustar hora ajusta direto o valor dos registradores de formatos 24 e 12
+função ajustaHora(horadezena, horadezena12, horaunidade, butmais, butmenos):
+    se butmais:
+        horaunidade++
+    se butmenos:
+        horaunidade--
+    se horaunidade menor ou igual a 0:
+        horaunidade = 0
+    se horaunidade maior ou igual a 10:
+        horaunidade = 0
+        horadezena++
+        horadezena12++
+        se horadezena maior ou igual a 2:
+            horadezena = 0
+        se horadezena12 maior ou igual a 1:
+            horadezena12 = 1
+
+//Função para ajustar minutos -  ajusta direto o valor dos registradores
+função ajustaMin(mindezena, minunidade, butmais, butmenos):
+    se butmais:
+        minunidade++
+    se butmenos:
+        minunidade--
+    se minunidade menor ou igual a 0:
+        minunidade = 0
+    se minunidade maior ou igual a 10:
+        minunidade = 0
+        mindezena++
+        se mindezena maior ou igual a 6:
+            mindezena = 0
+
+//função que escolhe o que será mostrado no display e liga led de AMPM se necessário
+função mostraDisplay(horadezena, horaunidade, minutodezena, minutounidade, segundodezena, segundounidade, ledAM):
+    display[5] = horadezena
+    display[4] = horaunidade
+    display[3] = minutodezena
+    display[2] = minutounidade
+    display[1] = segundodezena
+    display[0] = segundounidade
+    se AMPM e não cron:
+        ledAMout = ledAM
+    se não:
+        ledAMout = 0
+
+
+    
+//programa geral - top level
+enquanto verdade:
+
+    //hora contando
+    contaHora(horadezena, horadezena12, horaunidade, minutodezena, minutounidade, segundodezena, segundounidade, seg, ledAM)
+
+    //cronometro contando
+    contaHora(horadezenacron,0, horaunidadecron, minutodezenacron, minutounidadecron, segundodezenacron, segundounidadecron, seg, 0)
+
+    //ajustando hora
+    se chaveahora:
+        ajustaHora(horadezena, horadezena12, horaunidade, butmais, butmenos)
+        se AMPM:
+            mostraDisplay(horadezena12, horaunidade, minutodezena, minutounidade, segundodezena, segundounidade, ledAM)
+        se não:
+            mostraDisplay(horadezena, horaunidade, minutodezena, minutounidade, segundodezena, segundounidade, ledAM)
+
+    //ajustando minuto
+    se chavemin:
+        ajustaMin(mindezena, minunidade, butmais, butmenos)
+        se AMPM:
+            mostraDisplay(horadezena12, horaunidade, minutodezena, minutounidade, segundodezena, segundounidade, ledAM)
+        se não:
+            mostraDisplay(horadezena, horaunidade, minutodezena, minutounidade, segundodezena, segundounidade, ledAM)
+
+    //escolhe o que será mostrado de acordo com as entradas vindas do I/O
+    se AMPM:
+        mostraDisplay(horadezena12, horaunidade, minutodezena, minutounidade, segundodezena, segundounidade, ledAM)
+    se não e cron:
+        mostraDisplay(horadezenacron, horaunidadecron, minutodezenacron, minutounidadecron, segundodezenacron, segundounidadecron, ledAM)
+    se não:
+        mostraDisplay(horadezena, horaunidade, minutodezena, minutounidade, segundodezena, segundounidade, ledAM)
