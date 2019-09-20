@@ -4,15 +4,17 @@ use ieee.std_logic_1164.all;
 entity seconds_counter is
 	generic
 	(
-		FAST_CLK_FREQ : natural := 50e6
+		FAST_CLK_FREQ 	  : natural := 50e6;
+		ALTERNATIVE_FREQ : natural := 5e6
 	);
 
 
 	port
 	(
 		-- Input ports
-		clk	: in std_logic;
-		clear	: in std_logic;
+		clk		: in std_logic;
+		clear		: in std_logic;
+		fast_foward: in std_logic;
 
 		-- Inout ports
 		q	: out std_logic := '0'
@@ -32,11 +34,17 @@ architecture conta of seconds_counter is
 					ticks	<= 0;
 					q <= '0';
 				else 
-					if ticks = FAST_CLK_FREQ - 1 then
-						ticks <= 0;
-						q <= '1';
+					ticks <= ticks + 1;
+					if fast_foward = '1' then 
+						if ticks = ALTERNATIVE_FREQ then
+							ticks <= 0;
+							q <= '1';
+						end if;
 					else
-						ticks <= ticks + 1;
+						if ticks = FAST_CLK_FREQ - 1 then
+							ticks <= 0;
+							q <= '1';
+						end if;
 					end if;
 				end if;
 			end if;
