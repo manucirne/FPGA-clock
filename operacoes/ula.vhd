@@ -53,6 +53,12 @@ BEGIN
 					 
 				WHEN "010" =>
                 output_sig <= a xor b;
+					 
+				WHEN "011" => 
+					 output_sig <= a;
+					 
+				WHEN "100" => 
+					 output_sig <= b;
 
             WHEN OTHERS =>
                 output_sig <= (OTHERS => '0');
