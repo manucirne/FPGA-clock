@@ -14,13 +14,19 @@ entity UC is
           Endereco : in std_logic_vector (addrWidth-1 DOWNTO 0);
 			 NG : in std_logic;
 			 Z : in std_logic;
-          Dado : out std_logic_vector (dataWidth-1 DOWNTO 0);
+			 muxim : out std_logic;
+			 muxAC : out std_logic;
+			 muxULAMem : out std_logic;
+			 operacao : out std_logic_vector(3 DOWNTO 0);
+			 BRWR : out std_logic;
+			 IOWRRD: out std_logic;
 			 Jump  : out std_logic
     );
 end entity;
 
 architecture initUC of UC is
 SIGNAL jumpsig1 : std_logic;
+SIGNAL DADO : std_logic_vector (dataWidth-1 DOWNTO 0);
 
 type memory_t is array (2**addrWidth -1 downto 0) of std_logic_vector (dataWidth-1 downto 0);
 signal content: memory_t;
@@ -40,7 +46,14 @@ begin
         res=> jumpsig1
         );
 		  
-	Dado <= content(to_integer(unsigned(Endereco)));
+	DADO <= content(to_integer(unsigned(Endereco)));
 	Jump <= jumpsig1 AND Endereco(3);
+	muxim <= DADO(8);
+	 muxAC <= DADO(7);
+	 muxULAMem <= DADO(6);
+	 operacao <= DADO(3 DOWNTO 0);
+	 BRWR <= DADO(4);
+	 IOWRRD <= DADO(5);
+	
 		  
 end architecture;
