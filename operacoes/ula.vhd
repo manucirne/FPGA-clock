@@ -4,29 +4,32 @@ USE ieee.numeric_std.ALL;
 
 ENTITY ula IS
     GENERIC (
-        width : INTEGER := 4
+        size : INTEGER := 4
     );
 
     PORT (
-        a : IN std_logic_vector((width - 1) DOWNTO 0);
-        b : IN std_logic_vector((width - 1) DOWNTO 0);
+        a : IN std_logic_vector((size - 1) DOWNTO 0);
+        b : IN std_logic_vector((size - 1) DOWNTO 0);
         --instrucoes
         sel : IN std_logic_vector((2) DOWNTO 0);
         --out
         z : OUT std_logic;
         ng : OUT std_logic;
-        output : OUT std_logic_vector((width - 1) DOWNTO 0)
+        output : OUT std_logic_vector((size - 1) DOWNTO 0)
 
     );
 
 END ENTITY;
 
 ARCHITECTURE rtl OF ula IS
-    SIGNAL output_sig, soma_sig, sub_sig : std_logic_vector((width - 1) DOWNTO 0);
+    SIGNAL output_sig, soma_sig, sub_sig : std_logic_vector((size - 1) DOWNTO 0);
 
 BEGIN
 
     soma : ENTITY work.somavec
+		GENERIC MAP(
+			size => size
+		)
         PORT MAP(
             a => a,
             b => b,
@@ -36,6 +39,9 @@ BEGIN
         );
 		  
 		sub : ENTITY work.sub
+			GENERIC MAP(
+			size => size
+				)
 			  PORT MAP(
 					a => a,
 					b => b,
