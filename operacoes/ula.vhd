@@ -11,7 +11,7 @@ ENTITY ula IS
         a : IN std_logic_vector((size - 1) DOWNTO 0);
         b : IN std_logic_vector((size - 1) DOWNTO 0);
         --instrucoes
-        sel : IN std_logic_vector((2) DOWNTO 0);
+        sel : IN std_logic_vector((3) DOWNTO 0);
         --out
         z : OUT std_logic;
         ng : OUT std_logic;
@@ -51,19 +51,19 @@ BEGIN
 			 PROCESS (sel)
     BEGIN
         CASE sel IS
-            WHEN "000" =>
+            WHEN "0000" =>
                 output_sig <= soma_sig;
 					 
-				WHEN "001" =>
+				WHEN "0001" =>
                 output_sig <= sub_sig;
 					 
-				WHEN "010" =>
+				WHEN "0010" =>
                 output_sig <= a xor b;
 					 
-				WHEN "011" => 
+				WHEN "0011" => 
 					 output_sig <= a;
 					 
-				WHEN "100" => 
+				WHEN "0100" => 
 					 output_sig <= b;
 
             WHEN OTHERS =>
