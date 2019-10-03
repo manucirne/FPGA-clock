@@ -48,7 +48,7 @@ BEGIN
 					cout => OPEN,
 					sum => sub_sig
 			  );
-			 PROCESS (sel)
+			 PROCESS (sel, soma_sig, sub_sig, a, b)
     BEGIN
         CASE sel IS
             WHEN "0000" =>

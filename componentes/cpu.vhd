@@ -25,7 +25,7 @@ ENTITY cpu IS
 END ENTITY;
 
 ARCHITECTURE rtl OF cpu IS 
-	 SIGNAL jumpsignal, muxULAMemsignal, muximsignal, muxACsignal, muxULAimsignal, zsig, ngsig, WRBRsignal, WRRDiosignal : std_logic;
+	 SIGNAL jumpsignal, muxULAMemsignal, muximsignal, muxACsignal, zsig, ngsig, WRBRsignal, WRRDiosignal : std_logic;
 	 SIGNAL ACsignal, ULAMemsignal, ulaoutsignal, Cregsignal, Bregsignal, ulainsignal : std_logic_vector(7 downto 0);
 	 SIGNAL instructionaddrsig : std_logic_vector(15 downto 0);
 	 SIGNAL operacaosignal : std_logic_vector(3 downto 0);
@@ -72,7 +72,7 @@ BEGIN
 			  PORT MAP(
 					a0 => Cregsignal,
 					a1 => instruction(7 downto 0),
-					sel => muxULAimsignal,
+					sel => muximsignal,
 					res => ulainsignal
 			  );
 			  

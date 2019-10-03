@@ -2,12 +2,12 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
-entity romMif is
+entity rom is
 
     generic
     (
-        dataWidth : natural := 8;
-        addrWidth : natural := 8
+        dataWidth : natural := 28;
+        addrWidth : natural := 16
     );
 
     port (
@@ -16,7 +16,7 @@ entity romMif is
     );
 end entity;
 
-architecture initFileROM of romMif is
+architecture initFileROM of rom is
 
 type memory_t is array (2**addrWidth -1 downto 0) of std_logic_vector (dataWidth-1 downto 0);
 signal content: memory_t;

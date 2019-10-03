@@ -17,7 +17,7 @@ architecture rtl of mux4 is
 begin
   -- Para sintetizar lógica combinacional usando um processo,
   --  todas as entradas do modulo devem aparecer na lista de sensibilidade.
-    process(a0, a1, a2, a3, sel) is
+    process( a0, a1, a2, a3, sel) is
     begin
      -- If é uma instrução sequencial que não pode ser usada
      --  na seção de instruções concorrentes da arquitetura.
