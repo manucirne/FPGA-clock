@@ -47,13 +47,14 @@ begin
         );
 		  
 	DADO <= content(to_integer(unsigned(Endereco)));
-	Jump <= jumpsig1 AND Endereco(3);
+	
+	Jump <= (jumpsig1 AND Endereco(3) AND Endereco(2));
 	muxim <= DADO(8);
-	 muxAC <= DADO(7);
-	 muxULAMem <= DADO(6);
-	 operacao <= DADO(3 DOWNTO 0);
-	 BRWR <= DADO(4);
-	 IOWRRD <= DADO(5);
+	muxAC <= DADO(7);
+	muxULAMem <= DADO(6);
+	operacao <= DADO(3 DOWNTO 0);
+	BRWR <= DADO(4);
+	IOWRRD <= DADO(5);
 	
 		  
 end architecture;
