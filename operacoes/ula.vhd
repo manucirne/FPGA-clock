@@ -68,6 +68,9 @@ BEGIN
 					 
 				WHEN "0100" => 
 					 output_sig <= b;
+					 
+				WHEN "0101" =>
+                output_sig <= a and b;
 
 
             WHEN OTHERS =>
