@@ -7,7 +7,7 @@ entity buttons is
 		read_enable	 : in  std_logic;
 		data_read 	 : out std_logic_vector(7 downto 0);
 		data_write 	 : in  std_logic_vector(7 downto 0);
-		KEY : IN STD_LOGIC_VECTOR(3 downto 0)
+		keys : IN STD_LOGIC_VECTOR(3 downto 0)
 	);
 	
 end buttons;
@@ -31,28 +31,28 @@ begin
 	reg0 : entity work.flipflop port map(
 			enable => '1',
 			clear => signal_clear(0),
-			clock => KEY(0),
+			clock => keys(0),
 			q => signal_3state(0)
 	);
 
 	reg1 : entity work.flipflop port map(
 			enable => '1',
 			clear => signal_clear(1),
-			clock => KEY(1),
+			clock => keys(1),
 			q => signal_3state(1)
 	);
 
 	reg2 : entity work.flipflop port map(
 			enable => '1',
 			clear => signal_clear(2),
-			clock => KEY(2),
+			clock => keys(2),
 			q => signal_3state(2)
 	);
 
 	reg3 : entity work.flipflop port map(
 			enable => '1',
 			clear => signal_clear(3),
-			clock => KEY(3),
+			clock => keys(3),
 			q => signal_3state(3)
 	);
 	

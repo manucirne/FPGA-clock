@@ -7,7 +7,7 @@ entity time_base is
 		read_enable	 : in  std_logic;
 		data_read 	 : out std_logic_vector(7 downto 0);
 		data_write 	 : in  std_logic_vector(7 downto 0);
-		SW 			 : in  std_logic_vector(17 downto 0);
+		switch	 : in  std_logic_vector(17 downto 0);
 		clock 		 : in  std_logic
 	);
 
@@ -32,7 +32,7 @@ begin
 		q => signal3state
 	);
 
-	signalExtSW <= SW(17);
+	signalExtSW <= switch(17);
 	signal_clear <= data_write(0) AND write_enable;
 
 	data_read <= (0 => signal3state, others => '0') when(read_enable = '1') else (others => 'Z');

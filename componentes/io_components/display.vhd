@@ -1,15 +1,15 @@
 library ieee;
 use ieee.std_logic_1164.all;
 
-entity display1 is 
+entity display is 
     port(
-        HEX1            : out std_logic_vector(6 downto 0);
+        d7seg            : out std_logic_vector(6 downto 0);
         write_enable    : in  std_logic;
         data_write      : in std_logic_vector(7 downto 0)
     );
-end display1;
+end display;
 
-architecture comportamento of display1 is
+architecture comportamento of display is
     signal display_data : std_logic_vector(6 downto 0);
 begin
     
@@ -20,6 +20,6 @@ begin
         end if;
     end process;
 
-    HEX1 <= display_data;
+    d7seg <= display_data;
 
 end architecture;
