@@ -9,8 +9,8 @@ entity IO is
         addr        : in  std_logic_vector(7 downto 0);
         write_enable: in  std_logic;
         clk         : in std_logic;
-        SWitchesin 			: in  std_logic_vector(17 downto 0);
-        KEYbutz         : in std_logic_vector(3 downto 0)
+        SWitchesin  : in  std_logic_vector(17 downto 0);
+        KEYbutz     : in std_logic_vector(3 downto 0)
         
     );
 end IO;
