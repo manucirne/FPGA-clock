@@ -1,11 +1,18 @@
 ADDI %A, %B,  $Imm  || ($Imm + (%B) -> %A)
 ADD  %A, %B, %C  || ((%C) + (%B) -> %A)
+
+ANDI %A, %B,  $Imm  || ($Imm & (%B) -> %A)
+AND  %A, %B, %C  || ((%C) & (%B) -> %A)
+
 XOR  %A, %B, %C  || ((%C) ^ (%B) -> %A)
 XORI %A, %B,  $Imm || ($Imm ^ (%B) -> %A)
+
 SUB  %A, %B, %C  ||  ((%C) - (%B) -> %A)
 SUBI %A, %B, $Imm  || ($Imm - (%B) -> %A)
+
 LEA  %C,  $Imm (%B) || ( (%(Imm +(%B)) -> %C)
 WEA $Imm (%B) , (%C) ||  ((%C) -> %(Imm + (%B)))
+
 JMP %Imm (16bit)
 JG    (%C), %Imm || (Jump to %Imm if (%C) is greater than zero)
 JN   (%C), %Imm || (Jump to %Imm if (%C) is negative)
