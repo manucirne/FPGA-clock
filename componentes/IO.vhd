@@ -4,13 +4,13 @@ use ieee.std_logic_1164.all;
 entity IO is
     port(
         data_read   : out std_logic_vector(7 downto 0);
-        HEX0, HEX1, HEX2, HEX3, HEX4, HEX5: OUT STD_LOGIC_VECTOR(6 downto 0);
+        display0out, display1out, display2out, display3out, display4out, display5out: OUT STD_LOGIC_VECTOR(6 downto 0);
         data_write  : in  std_logic_vector(7 downto 0);
         addr        : in  std_logic_vector(7 downto 0);
         write_enable: in  std_logic;
         clk         : in std_logic;
-        SW 			: in  std_logic_vector(17 downto 0);
-        KEY         : in std_logic_vector(3 downto 0)
+        SWitchesin 			: in  std_logic_vector(17 downto 0);
+        KEYbutz         : in std_logic_vector(3 downto 0)
         
     );
 end IO;
@@ -52,7 +52,7 @@ begin
     en7seg4 <= '1' when (addr = "00001010") else '0'; 
     en7seg5 <= '1' when (addr = "00001011") else '0'; 
 
-    ext_sw <= SW;
+    ext_sw <= SWitchesin;
     
     time_b : entity work.time_base
     port map(
@@ -72,7 +72,7 @@ begin
     port map(
         read_enable => enable_sw1_read,
         data_read => data_read_bus,
-        switch => ext_sw
+        SWitches => ext_sw
     );
 
     sw_1 : entity work.switches
@@ -83,10 +83,10 @@ begin
     port map(
         read_enable => enable_sw2_read,
         data_read => data_read_bus,
-        switch => ext_sw
+        SWitches => ext_sw
     );
 
-    ext_keys <= KEY;
+    ext_keys <= KEYbutz;
 
     bot : entity work.buttons
     port map(
@@ -97,7 +97,7 @@ begin
         keys         => ext_keys
     );
 
-    HEX0 <= d0;
+    display0out <= d0;
 
     disp0 : entity work.display
     port map(
@@ -106,7 +106,7 @@ begin
         data_write => data_write_bus
     );
 
-    HEX1 <= d1;
+    display1out <= d1;
 
     disp1 : entity work.display
     port map(
@@ -115,7 +115,7 @@ begin
         data_write => data_write_bus
     );
 
-    HEX2 <= d2;
+    display2out <= d2;
 
     disp2 : entity work.display
     port map(
@@ -124,7 +124,7 @@ begin
         data_write => data_write_bus
     );
 
-    HEX3 <= d3;
+    display3out <= d3;
 
     disp3 : entity work.display
     port map(
@@ -133,7 +133,7 @@ begin
         data_write => data_write_bus
     );
 
-    HEX4 <= d4;
+    display4out <= d4;
 
     disp4 : entity work.display
     port map(
@@ -143,7 +143,7 @@ begin
     );
 
 
-    HEX5 <= d5;
+    display5out <= d5;
 
     disp5 : entity work.display
     port map(
