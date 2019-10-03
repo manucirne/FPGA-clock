@@ -12,7 +12,7 @@ ENTITY relogio IS
 
     PORT (
 			--IN
-			clk : IN std_logic;
+			CLOCK_50 : IN std_logic;
 			 SW : in STD_LOGIC_VECTOR(17 downto 0);
 			 KEY : IN STD_LOGIC_VECTOR(3 downto 0);
 		  --OUT
@@ -32,7 +32,7 @@ BEGIN
 
     CPURELOGIO : ENTITY work.cpu
         PORT MAP(
-		  clk => clk,
+		  clk => CLOCK_50,
         instruction => instsigrom,
         dataioin => dataRDsigio,
 		  --OUT
@@ -40,8 +40,8 @@ BEGIN
         instructionaddr => pcsigaddr,
         WRRDio => wrrdiosignal,
         ioaddr => addrsigio
-        );
-		  
+		);
+				  
 		ROMRELOGIO : ENTITY work.rom
 			  PORT MAP(
 			  Endereco => pcsigaddr,
@@ -60,7 +60,7 @@ BEGIN
 			  data_write  =>dataWRsigio,
 			  addr  => addrsigio,
 			  write_enable => wrrdiosignal,
-			  clk => clk,
+			  clk => CLOCK_50,
 			  SWitchesin => SW,
 			  KEYbutz => KEY
 				  );
