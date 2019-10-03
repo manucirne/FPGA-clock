@@ -229,7 +229,8 @@ if __name__ == '__main__':
     argparse = argparse.ArgumentParser()
     argparse.add_argument('in_file', type=str)
     argparse.add_argument('-d', '--debug', default=False, action='store_true')
-    argparse.add_argument('-mif', '--mif-format', default=False, action='store_true')
+    argparse.add_argument('-m', '--mif-format', default=False, action='store_true')
+    argparse.add_argument('-o', '--output', default="./output.mif")
     argparse.add_argument('-a', '--addr', type=int, default=16)
     argparse.add_argument('-w', '--width', type=int, default=28)
     argparse.add_argument('-i', '--increment-by', type=int, default=1)
@@ -244,7 +245,7 @@ if __name__ == '__main__':
 
     mips = MIPS_Assemble(out_format)
     mips.set_load_file(open(args.in_file, 'r'))
-    mips.set_save_file(open('output.mif', 'w'))
+    mips.set_save_file(open(args.output, 'w'))
     mips.first_pass()
 
     mips.assemble()
