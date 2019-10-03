@@ -20,11 +20,12 @@ class Line_Assemble:
     def set_line(self, line):
         self.line = line.strip().replace('  ', ' ')
         if self.line.find('#') != -1:
-            self.line = self.line[0:self.line.find('#')]
+            self.line = self.line[:self.line.find('#')]
 
         logging.debug('set line: {}'.format(self.line))
 
     def get_parts(self):
+        instruct = ''
         if self.line.strip() == '':
             return ('', [])
 
@@ -34,6 +35,7 @@ class Line_Assemble:
         elif ':' in self.line: 
             instruct = self.line
             args = self.line[:self.line.find(':')]
+
 
         logging.debug('parts: {} {}'.format(instruct, args))
         return (instruct, args.split(','))
@@ -49,6 +51,7 @@ class Line_Assemble:
             tp = 'i'
         elif instruct in self.j_instructions:
             tp = 'j'
+
         logging.debug('type: {}'.format(tp))
         return tp
 
