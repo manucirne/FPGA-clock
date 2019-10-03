@@ -36,9 +36,9 @@ architecture rtl of BR is
 	signal regs : memory_t;
 
 	-- Register to hold the address 
-	signal enderecoCreg : std_logic_vector((larguraEndBancoRegs -1) downto 0) := enderecoC;
-	signal enderecoAreg : std_logic_vector((larguraEndBancoRegs -1) downto 0) := enderecoA;
-	signal enderecoBreg : std_logic_vector((larguraEndBancoRegs -1) downto 0) := enderecoB;
+	-- signal enderecoCreg : std_logic_vector((larguraEndBancoRegs -1) downto 0) := enderecoC;
+	-- signal enderecoAreg : std_logic_vector((larguraEndBancoRegs -1) downto 0) := enderecoA;
+	-- signal enderecoBreg : std_logic_vector((larguraEndBancoRegs -1) downto 0) := enderecoB;
 	
 begin
 
@@ -47,13 +47,13 @@ begin
 	begin
 		if (rising_edge(clk)) then
 			if escreveA = '1' then
-				regs(to_integer(unsigned(enderecoAreg))) <= dadoEscritaA;
+				regs(to_integer(unsigned(enderecoA))) <= dadoEscritaA;
 			end if;
 		end if;
 	end process;
 	
-	SaidaC <= regs(to_integer(unsigned(enderecoCreg)));
-	SaidaB <= regs(to_integer(unsigned(enderecoBreg)));
+	SaidaC <= regs(to_integer(unsigned(enderecoC)));
+	SaidaB <= regs(to_integer(unsigned(enderecoB)));
 	
 
 end rtl;

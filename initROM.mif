@@ -15,7 +15,7 @@
 -- Quartus Prime generated Memory Initialization File (.mif)
 
 WIDTH=28;
-DEPTH=256;
+DEPTH=65536;
 
 ADDRESS_RADIX=DEC;
 DATA_RADIX=HEX;
@@ -50,5 +50,5 @@ CONTENT BEGIN
 	34   :   AE;
 	[35..37]  :   00;
 	38   :   26;
-	[39..255]  :   20;
+	[39..65535]  :   20;
 END;

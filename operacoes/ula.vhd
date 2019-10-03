@@ -50,7 +50,8 @@ BEGIN
 					cout => ng_sig,
 					sum => sub_sig
 			  );
-			 PROCESS (sel, soma_sig, sub_sig, a, b)
+	 
+	 PROCESS (sel, soma_sig, sub_sig, a, b)
     BEGIN
         CASE sel IS
             WHEN "0000" =>
@@ -76,6 +77,7 @@ BEGIN
     END PROCESS;
     output <= output_sig;
 	 ng <= ng_sig;
+	 -- https://stackoverflow.com/questions/20296276/and-all-elements-of-an-n-bit-array-in-vhdl
     z <= '1' when not output_sig = 0 else '0';
 
 END ARCHITECTURE;

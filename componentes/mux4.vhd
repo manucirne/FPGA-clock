@@ -21,15 +21,11 @@ begin
     begin
      -- If é uma instrução sequencial que não pode ser usada
      --  na seção de instruções concorrentes da arquitetura.
-        if(sel="00") then
-            res <= a0;
-        elsif(sel="01") then
-            res <= a1;
-			elsif(sel="10") then
-            res <= a2;
-			elsif(sel="11") then
-            res <= a3;
-				
-        end if;
+		case(sel) is
+        when "00" => res <= a0;
+        when "01" => res <= a1;
+		  when "10" => res <= a2;
+		  when "11" => res <= a3;
+	   end case;
     end process;
 end architecture;
