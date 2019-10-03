@@ -1,6 +1,7 @@
 LIBRARY ieee;
 USE ieee.std_logic_1164.ALL;
 USE ieee.numeric_std.ALL;
+USE IEEE.std_logic_unsigned.ALL;
 
 ENTITY ula IS
     GENERIC (
@@ -23,6 +24,7 @@ END ENTITY;
 
 ARCHITECTURE rtl OF ula IS
     SIGNAL output_sig, soma_sig, sub_sig : std_logic_vector((size - 1) DOWNTO 0);
+	 SIGNAL ng_sig : std_logic;
 
 BEGIN
 
@@ -45,7 +47,7 @@ BEGIN
 			  PORT MAP(
 					a => a,
 					b => b,
-					cout => OPEN,
+					cout => ng_sig,
 					sum => sub_sig
 			  );
 			 PROCESS (sel, soma_sig, sub_sig, a, b)
@@ -66,11 +68,14 @@ BEGIN
 				WHEN "0100" => 
 					 output_sig <= b;
 
+
             WHEN OTHERS =>
                 output_sig <= (OTHERS => '0');
 
         END CASE;
     END PROCESS;
     output <= output_sig;
-    z <= '0'; -- unsigned(output_sig) = 0 
+	 ng <= ng_sig;
+    z <= '1' when not output_sig = 0 else '0';
+
 END ARCHITECTURE;
