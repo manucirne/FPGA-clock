@@ -107,7 +107,7 @@ class Line_Assemble:
         register = register.strip().replace(' ', '')
         if '(' in register:
             register = register[register.find('(')+1:register.find(')')]
-
+        instruct = ''
         if '$' in register:
             register = register[register.find('$')+1:]
 
