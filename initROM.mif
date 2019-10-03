@@ -21,8 +21,8 @@ ADDRESS_RADIX=DEC;
 DATA_RADIX=HEX;
 
 CONTENT BEGIN
-	0    :   34 1001;
-	1    :   1C 100B;
+	0    :   D010001;
+	1    :   701000B;
 	2    :   4C;
 	3    :   2F;
 	[4..5]  :   20;
