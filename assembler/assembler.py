@@ -71,7 +71,11 @@ class Line_Assemble:
         if self.get_instruction_type() == 'r':
             output = self.get_r_instruction(instruct) + self.get_register(args[2]) + self.get_register(args[1]) + self.get_register(args[0])
         elif self.get_instruction_type() == 'i' and len(args) == 2:
-            output = self.get_i_instruction(instruct) + self.get_register(args[0]) +  self.get_register(args[1]) + self.get_immediate(args[0], 8)
+
+            if instruct == "lea":
+                output = self.get_i_instruction(instruct) + self.get_register(args[0]) +  self.get_register(args[1]) + self.get_immediate(args[0], 8)
+            else:
+                output = self.get_i_instruction(instruct) + self.get_register(args[0]) +  self.get_register(args[1]) + self.get_immediate(args[1], 8)
         elif self.get_instruction_type() == 'i' and len(args) == 3:
             output = self.get_i_instruction(instruct) + self.get_register(args[2]) + self.get_register(args[1]) + self.get_immediate(args[0], 8)
         elif self.get_instruction_type() == 'j' and len(args) == 1:
