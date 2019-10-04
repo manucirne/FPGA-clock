@@ -10,7 +10,7 @@ ENTITY relogio IS
 		  sizeopcode : INTEGER := 4;
 		  
 		  ----====== MARCO
-		  divisor : natural := 20000000
+		  divisor : natural := 1000000
 		  --#######
     );
 
@@ -22,11 +22,7 @@ ENTITY relogio IS
 			 SW : in STD_LOGIC_VECTOR(17 downto 0);
 			 KEY : IN STD_LOGIC_VECTOR(3 downto 0);
 		  --OUT
-		  HEX0, HEX1, HEX2, HEX3, HEX4, HEX5 : OUT STD_LOGIC_VECTOR(6 downto 0);
-		  
-		  LEDR : out std_logic_vector(17 downto 0);
-		  LEDG : out std_logic_vector(7 downto 0)
-
+		  HEX0, HEX1, HEX2, HEX3, HEX4, HEX5 : OUT STD_LOGIC_VECTOR(6 downto 0)
     );
 
 END ENTITY;
@@ -58,8 +54,6 @@ BEGIN
             end if;
         end process;
 		  
-		  LEDR <= instsigrom(17 downto 0);
-		  LEDG <= pcsigaddr(7 downto 0);
 
     CPURELOGIO : ENTITY work.cpu
         PORT MAP(
