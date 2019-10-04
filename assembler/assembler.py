@@ -130,10 +130,11 @@ class Line_Assemble:
 
         if '$' in immediate and '(' in immediate:
             immediate = immediate[immediate.find('$')+1:immediate.find('(')]
-            
+        if '(' in immediate:
+            immediate = immediate[:immediate.find('(')]
         elif '$' in immediate:
             immediate = immediate[immediate.find('$')+1:]
-
+        
         r = bindigits(int(immediate), size)
         logging.debug('immediate: {}'.format(r))
         return r
