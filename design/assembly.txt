@@ -10,8 +10,8 @@ XORI $Imm, %B, %C || ($Imm ^ (%B) -> %A)
 SUB  %C, %B, %A  ||  ((%C) - (%B) -> %A)
 SUBI $Imm, %B, %C || ($Imm - (%B) -> %A)
 
-LEA  %C,  $Imm (%B) || ( (%(Imm +(%B)) -> %C)
-WEA $Imm(%B) , (%C) ||  ((%C) -> %(Imm + (%B)))
+LEA $Imm(%B), (%C)   || ( (%(Imm +(%B)) -> %C)
+WEA (%C), $Imm(%B)   ||  ((%C) -> %(Imm + (%B)))
 
 JMP %Imm (16bit)
 JG    (%C), label || (Jump to %label if (%C) is greater than zero)
