@@ -34,6 +34,8 @@ architecture rtl of BR is
 
 	-- Declare the regs signal.	
 	signal regs : memory_t;
+	signal enable_A : std_logic;
+	signal sigZero : std_logic_vector((larguraDados  -1) downto 0);
 
 	-- Register to hold the address 
 	-- signal enderecoCreg : std_logic_vector((larguraEndBancoRegs -1) downto 0) := enderecoC;
@@ -41,19 +43,22 @@ architecture rtl of BR is
 	-- signal enderecoBreg : std_logic_vector((larguraEndBancoRegs -1) downto 0) := enderecoB;
 	
 begin
-
+	
+	sigZero <= (others => '0');
 	-- Update the register output on the clock's rising edge
 	process (clk)
 	begin
 		if (rising_edge(clk)) then
-			if escreveA = '1' then
+			if (escreveA = '1') then
 				regs(to_integer(unsigned(enderecoA))) <= dadoEscritaA;
 			end if;
 		end if;
 	end process;
 	
-	SaidaC <= regs(to_integer(unsigned(enderecoC)));
-	SaidaB <= regs(to_integer(unsigned(enderecoB)));
+	--enable_A <= '0' when(enderecoA = "00000000") else escreveA;
+	
+	SaidaC <= sigZero when(enderecoC = "00000000") else regs(to_integer(unsigned(enderecoC)));
+	SaidaB <=  sigZero when(enderecoB = "00000000") else regs(to_integer(unsigned(enderecoB)));
 	
 
 end rtl;

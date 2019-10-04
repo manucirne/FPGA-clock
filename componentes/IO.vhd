@@ -7,6 +7,7 @@ entity IO is
         display0out, display1out, display2out, display3out, display4out, display5out: OUT STD_LOGIC_VECTOR(6 downto 0);
         data_write  : in  std_logic_vector(7 downto 0);
         addr        : in  std_logic_vector(7 downto 0);
+		  read_enable : in  std_logic;
         write_enable: in  std_logic;
         clk         : in std_logic;
         SWitchesin  : in  std_logic_vector(17 downto 0);
@@ -31,26 +32,26 @@ begin
 
     -- time base control points
     enable_time <= (NOT upper_ORed) AND (NOT (addr(3) OR addr(2) OR addr(1)));
-    enable_time_read <= enable_time AND (NOT addr(0));
+    enable_time_read <= read_enable AND enable_time AND (NOT addr(0));
     enable_time_write <= enable_time AND addr(0) and write_enable;
 
     --switch control points
     enable_sw_read <= (NOT upper_ORed) AND (NOT addr(3)) AND (NOT addr(2)) AND addr(1);
-    enable_sw1_read <= enable_sw_read AND (NOT addr(0));
+    enable_sw1_read <= read_enable AND enable_sw_read AND (NOT addr(0));
     enable_sw2_read <= enable_sw_read AND addr(0);
 
     --buttons control points
     enable_bot <= (NOT upper_ORed) AND (NOT addr(1)) AND (NOT addr(3)) AND addr(2);
-    enable_bot_read <= enable_bot AND (NOT addr(0));
+    enable_bot_read <= read_enable AND enable_bot AND (NOT addr(0));
     enable_bot_write <= enable_bot AND addr(0) AND write_enable;
 
     --Displays control points
-    en7seg0 <= '1' when (addr = "00000110") else '0';
-    en7seg1 <= '1' when (addr = "00000111") else '0'; 
-    en7seg2 <= '1' when (addr = "00001000") else '0'; 
-    en7seg3 <= '1' when (addr = "00001001") else '0'; 
-    en7seg4 <= '1' when (addr = "00001010") else '0'; 
-    en7seg5 <= '1' when (addr = "00001011") else '0'; 
+    en7seg0 <= write_enable when (addr = "00000110") else '0';
+    en7seg1 <= write_enable when (addr = "00000111") else '0'; 
+    en7seg2 <= write_enable when (addr = "00001000") else '0'; 
+    en7seg3 <= write_enable when (addr = "00001001") else '0'; 
+    en7seg4 <= write_enable when (addr = "00001010") else '0'; 
+    en7seg5 <= write_enable when (addr = "00001011") else '0'; 
 
     ext_sw <= SWitchesin;
     
@@ -72,7 +73,7 @@ begin
     port map(
         read_enable => enable_sw1_read,
         data_read => data_read_bus,
-        SWitches => ext_sw
+        in_sw => ext_sw
     );
 
     sw_1 : entity work.switches
@@ -83,7 +84,7 @@ begin
     port map(
         read_enable => enable_sw2_read,
         data_read => data_read_bus,
-        SWitches => ext_sw
+        in_sw => ext_sw
     );
 
     ext_keys <= KEYbutz;
@@ -102,8 +103,9 @@ begin
     disp0 : entity work.display
     port map(
         d7seg => d0,
+		  clock => clk,
         write_enable => en7seg0,
-        data_write => data_write_bus(3 downto 0)
+        data_write => data_write_bus
     );
 
     display1out <= d1;
@@ -111,8 +113,9 @@ begin
     disp1 : entity work.display
     port map(
         d7seg => d1,
+		  clock => clk,
         write_enable => en7seg1,
-        data_write => data_write_bus(3 downto 0)
+        data_write => data_write_bus
     );
 
     display2out <= d2;
@@ -120,8 +123,9 @@ begin
     disp2 : entity work.display
     port map(
         d7seg => d2,
+		  clock => clk,
         write_enable => en7seg2,
-        data_write => data_write_bus(3 downto 0)
+        data_write => data_write_bus
     );
 
     display3out <= d3;
@@ -129,8 +133,9 @@ begin
     disp3 : entity work.display
     port map(
         d7seg => d3,
+		  clock => clk,
         write_enable => en7seg3,
-        data_write => data_write_bus(3 downto 0)
+        data_write => data_write_bus
     );
 
     display4out <= d4;
@@ -138,8 +143,9 @@ begin
     disp4 : entity work.display
     port map(
         d7seg => d4,
+		  clock => clk,
         write_enable => en7seg4,
-        data_write => data_write_bus(3 downto 0)
+        data_write => data_write_bus
     );
 
 
@@ -148,8 +154,9 @@ begin
     disp5 : entity work.display
     port map(
         d7seg => d5,
+		  clock => clk,
         write_enable => en7seg5,
-        data_write => data_write_bus(3 downto 0)
+        data_write => data_write_bus
     );
 	 
 	
