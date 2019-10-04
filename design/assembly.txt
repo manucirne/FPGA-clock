@@ -1,19 +1,19 @@
-ADDI %A, %B,  $Imm  || ($Imm + (%B) -> %A)
-ADD  %A, %B, %C  || ((%C) + (%B) -> %A)
+ADDI $Imm, %B, %C   || ($Imm + (%B) -> %C)
+ADD  %C, %B, %A  || ((%C) + (%B) -> %A)
 
-ANDI %A, %B,  $Imm  || ($Imm & (%B) -> %A)
-AND  %A, %B, %C  || ((%C) & (%B) -> %A)
+ANDI $Imm, %B, %C,   || ($Imm & (%B) -> %C)
+AND  %C, %B, %A  || ((%C) & (%B) -> %A)
 
-XOR  %A, %B, %C  || ((%C) ^ (%B) -> %A)
-XORI %A, %B,  $Imm || ($Imm ^ (%B) -> %A)
+XOR  %C, %B, %A  || ((%C) ^ (%B) -> %A)
+XORI $Imm, %B, %C || ($Imm ^ (%B) -> %A)
 
-SUB  %A, %B, %C  ||  ((%C) - (%B) -> %A)
-SUBI %A, %B, $Imm  || ($Imm - (%B) -> %A)
+SUB  %C, %B, %A  ||  ((%C) - (%B) -> %A)
+SUBI $Imm, %B, %C || ($Imm - (%B) -> %A)
 
-LEA  %C,  $Imm (%B) || ( (%(Imm +(%B)) -> %C)
-WEA $Imm (%B) , (%C) ||  ((%C) -> %(Imm + (%B)))
+LEA $Imm(%B), (%C)   || ( (%(Imm +(%B)) -> %C)
+WEA (%C), $Imm(%B)   ||  ((%C) -> %(Imm + (%B)))
 
 JMP %Imm (16bit)
-JG    (%C), %Imm || (Jump to %Imm if (%C) is greater than zero)
-JN   (%C), %Imm || (Jump to %Imm if (%C) is negative)
-JE    (%C), %Imm || (Jump to %Imm if (%C) is zero)
+JG    (%C), label || (Jump to %label if (%C) is greater than zero)
+JN   (%C), label || (Jump to %label if (%C) is negative)
+JE    (%C), label || (Jump to %label if (%C) is zero)
