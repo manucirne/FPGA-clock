@@ -5,8 +5,8 @@ entity display is
     port(
         d7seg            : out std_logic_vector(6 downto 0);
         write_enable    : in  std_logic;
-        data_write      : in std_logic_vector(3 downto 0)
-    );
+        data_write      : in std_logic_vector(7 downto 0)
+	 );
 end display;
 
 architecture comportamento of display is

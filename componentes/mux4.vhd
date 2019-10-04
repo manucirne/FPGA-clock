@@ -22,10 +22,10 @@ begin
      -- If é uma instrução sequencial que não pode ser usada
      --  na seção de instruções concorrentes da arquitetura.
 		case(sel) is
-        when "00" => res <= a0;
-        when "01" => res <= a1;
-		  when "10" => res <= a2;
-		  when "11" => res <= a3;
+			  when "00" => res <= a0;
+			  when "01" => res <= a1;
+			  when "10" => res <= a2;
+			  when "11" => res <= a3;
 	   end case;
     end process;
 end architecture;

@@ -15,13 +15,16 @@
 #====================================================================
 
 inicio:
-addi $1, %zero, %t0
-addi $2, %zero, %t1
-addi $3, %zero, %t2
-addi $4, %zero, %t3
-wea  $0(%6), %t0
-wea  $1(%6), %t1
-wea  $2(%6), %t2
-wea  $2(%6), %t3
-wea  $0(%6), %t3
+addi $1, %t0, %t0
+wea  %t0 ,$11(%zero) 
+addi $1, %t0, %t0
+wea  %t0 ,$10(%zero) 
+addi $1, %t0, %t0
+wea  %t0 ,$9(%zero) 
+addi $1, %t0, %t0
+wea  %t0 ,$8(%zero) 
+addi $1, %t0, %t0
+wea  %t0 ,$7(%zero) 
+addi $1, %t0, %t0
+wea  %t0 ,$6(%zero) 
 jmp inicio
