@@ -9,7 +9,7 @@ entity switches is
 	port(
 		read_enable	 : in  std_logic;
 		data_read 	 : out std_logic_vector(7 downto 0);
-		SWitches 			 : in  std_logic_vector(17 downto 0)
+		in_sw 			 : in  std_logic_vector(17 downto 0)
 	);
 
 end switches;
@@ -20,7 +20,7 @@ architecture comportamento of switches is
 
 begin 
 	
-	signal_3state <= SWitches(start downto ending);
+	signal_3state <= in_sw(start downto ending);
 	
 	data_read <=  signal_3state when(read_enable = '1') else (others => 'Z');
 	

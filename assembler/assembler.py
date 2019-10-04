@@ -73,7 +73,7 @@ class Line_Assemble:
         elif self.get_instruction_type() == 'i' and len(args) == 2:
 
             if instruct == "lea":
-                output = self.get_i_instruction(instruct) + self.get_register(args[0]) +  self.get_register(args[1]) + self.get_immediate(args[0], 8)
+                output = self.get_i_instruction(instruct) + self.get_register(args[1]) +  self.get_register(args[0]) + self.get_immediate(args[0], 8)
             else:
                 output = self.get_i_instruction(instruct) + self.get_register(args[0]) +  self.get_register(args[1]) + self.get_immediate(args[1], 8)
         elif self.get_instruction_type() == 'i' and len(args) == 3:
