@@ -108,7 +108,7 @@ BEGIN
 			  
 		UCcpu : ENTITY work.UC
 			GENERIC MAP(
-			dataWidth => 9,
+			dataWidth => 10,
 			addrWidth => 4
 				)
 			  PORT MAP(
@@ -120,7 +120,7 @@ BEGIN
 			  operacao => operacaosignal,
 			  muxULAMem => muxULAMemsignal,
 			  BRWR => WRBRsignal,
-			  IOWRRD => WRRDiosignal,
+			  IOWR => WRRDiosignal,
 			  IORD => RDiosignal,
 			  Jump => jumpsignal
 			  );

@@ -10,7 +10,7 @@ ENTITY relogio IS
 		  sizeopcode : INTEGER := 4;
 		  
 		  ----====== MARCO
-		  divisor : natural := 30000000
+		  divisor : natural := 20000000
 		  --#######
     );
 

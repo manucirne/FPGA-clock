@@ -6,7 +6,7 @@ entity UC is
 
     generic
     (
-        dataWidth : natural := 9;
+        dataWidth : natural := 10;
         addrWidth : natural := 4
     );
 

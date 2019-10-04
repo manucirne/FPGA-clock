@@ -20,7 +20,7 @@ begin
     begin 
 	 if(rising_edge(clock)) then
         if(write_enable = '1') then
-            data_mem <= data_write;
+            data_mem <= data_write(3 downto 0);
         end if;
 		end if;
     end process;
