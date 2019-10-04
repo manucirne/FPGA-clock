@@ -71,7 +71,7 @@ class Line_Assemble:
         if self.get_instruction_type() == 'r':
             output = self.get_r_instruction(instruct) + self.get_register(args[2]) + self.get_register(args[1]) + self.get_register(args[0])
         elif self.get_instruction_type() == 'i' and len(args) == 2:
-            output = self.get_i_instruction(instruct) + self.get_register(args[0]) +  self.get_register(args[1]) + self.get_immediate(args[1])
+            output = self.get_i_instruction(instruct) + self.get_register(args[0]) +  self.get_register(args[1]) + self.get_immediate(args[0])
         elif self.get_instruction_type() == 'i' and len(args) == 3:
             output = self.get_i_instruction(instruct) + self.get_register(args[2]) + self.get_register(args[1]) + self.get_immediate(args[0])
         elif self.get_instruction_type() == 'j' and len(args) == 1:
@@ -129,8 +129,7 @@ class Line_Assemble:
     def get_immediate(self, immediate):
 
         if '$' in immediate and '(' in immediate:
-            immediate = immediate[immediate.find('$')+1:]
-            immediate = immediate[immediate.find('(')+1:immediate.find(')')]
+            immediate = immediate[immediate.find('$')+1:immediate.find('(')]
             r = bindigits(int(immediate), 16)
         elif '$' in immediate:
             immediate = immediate[immediate.find('$')+1:]
