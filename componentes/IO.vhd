@@ -103,7 +103,7 @@ begin
     port map(
         d7seg => d0,
         write_enable => en7seg0,
-        data_write => data_write_bus
+        data_write => data_write_bus(3 downto 0)
     );
 
     display1out <= d1;
@@ -112,7 +112,7 @@ begin
     port map(
         d7seg => d1,
         write_enable => en7seg1,
-        data_write => data_write_bus
+        data_write => data_write_bus(3 downto 0)
     );
 
     display2out <= d2;
@@ -121,7 +121,7 @@ begin
     port map(
         d7seg => d2,
         write_enable => en7seg2,
-        data_write => data_write_bus
+        data_write => data_write_bus(3 downto 0)
     );
 
     display3out <= d3;
@@ -130,7 +130,7 @@ begin
     port map(
         d7seg => d3,
         write_enable => en7seg3,
-        data_write => data_write_bus
+        data_write => data_write_bus(3 downto 0)
     );
 
     display4out <= d4;
@@ -139,7 +139,7 @@ begin
     port map(
         d7seg => d4,
         write_enable => en7seg4,
-        data_write => data_write_bus
+        data_write => data_write_bus(3 downto 0)
     );
 
 
@@ -149,9 +149,11 @@ begin
     port map(
         d7seg => d5,
         write_enable => en7seg5,
-        data_write => data_write_bus
+        data_write => data_write_bus(3 downto 0)
     );
-
+	 
+	
+	 
     data_read <= data_read_bus;
 
     data_write_bus <= data_write;
