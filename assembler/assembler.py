@@ -11,8 +11,8 @@ def bindigits(n, bits):
 
 class Line_Assemble:
     def __init__(self):
-        self.r_instructions = ['add', 'xor', 'sub', 'lea', 'and']
-        self.i_instructions = ['addi', 'xori', 'subi', 'wea', 'andi']
+        self.r_instructions = ['add', 'xor', 'sub', 'and']
+        self.i_instructions = ['addi', 'xori', 'subi','lea', 'wea', 'andi']
         self.j_instructions = ['jmp', 'jg', 'jn', 'je']
         self.labels = {}
         self.address = 0
@@ -90,13 +90,13 @@ class Line_Assemble:
         return output
         
     def get_r_instruction(self, instruct):
-        table = {'add':'0', 'xor':'1', 'sub':'2', 'lea':'6', 'and':'c'}
+        table = {'add':'0', 'xor':'1', 'sub':'2', 'and':'c'}
         r = bindigits(int(table[instruct], 16), 4)
         logging.debug('r funct: {}'.format(r))
         return r
 
     def get_i_instruction(self, instruct):
-        table = {'addi':'3', 'xori':'4', 'subi':'5', 'wea':'7', 'andi':'d'}
+        table = {'addi':'3', 'xori':'4', 'subi':'5', 'lea':'6', 'wea':'7', 'andi':'d'}
         r = bindigits(int(table[instruct], 16), 4)
         logging.debug('i instruct: {}'.format(r))
         return r
