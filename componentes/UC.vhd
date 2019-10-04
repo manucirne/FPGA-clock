@@ -48,7 +48,7 @@ begin
 		  
 	DADO <= content(to_integer(unsigned(Endereco)));
 	
-	Jump <= (jumpsig1 AND Endereco(3) AND Endereco(2));
+	Jump <= (jumpsig1 AND Endereco(3) AND (not Endereco(2)));
 	muxim <= DADO(8);
 	muxAC <= DADO(7);
 	muxULAMem <= DADO(6);
