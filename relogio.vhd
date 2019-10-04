@@ -22,7 +22,8 @@ ENTITY relogio IS
 			 SW : in STD_LOGIC_VECTOR(17 downto 0);
 			 KEY : IN STD_LOGIC_VECTOR(3 downto 0);
 		  --OUT
-		  HEX0, HEX1, HEX2, HEX3, HEX4, HEX5 : OUT STD_LOGIC_VECTOR(6 downto 0)
+		  HEX0, HEX1, HEX2, HEX3, HEX4, HEX5 : OUT STD_LOGIC_VECTOR(6 downto 0);
+		  LEDG : OUT std_logic_vector(7 downto 0)
     );
 
 END ENTITY;
@@ -37,9 +38,11 @@ ARCHITECTURE rtl OF relogio IS
 	 signal tick : std_logic := '0';
         signal contador : integer range 0 to divisor := 0;
 	 
-	 
 
 BEGIN
+
+	 LEDG <= pcsigaddr(7 downto 0);
+
 
 
 		process(CLOCK_50)

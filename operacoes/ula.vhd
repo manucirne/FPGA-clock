@@ -24,7 +24,7 @@ END ENTITY;
 
 ARCHITECTURE rtl OF ula IS
     SIGNAL output_sig, soma_sig, sub_sig : std_logic_vector((size - 1) DOWNTO 0);
-	 SIGNAL ng_sig : std_logic;
+	 SIGNAL ng_sig : std_logic := '0';
 
 BEGIN
 
@@ -53,12 +53,16 @@ BEGIN
 	 
 	 PROCESS (sel, soma_sig, sub_sig, a, b)
     BEGIN
+	 
+		  ng <= '0';
+		  
         CASE sel IS
             WHEN "0000" =>
                 output_sig <= soma_sig;
 					 
 				WHEN "0001" =>
                 output_sig <= sub_sig;
+					 ng <= ng_sig;
 					 
 				WHEN "0010" =>
                 output_sig <= a xor b;
@@ -79,8 +83,8 @@ BEGIN
         END CASE;
     END PROCESS;
     output <= output_sig;
-	 ng <= ng_sig;
+	 
 	 -- https://stackoverflow.com/questions/20296276/and-all-elements-of-an-n-bit-array-in-vhdl
-    z <= '1' when not output_sig = 0 else '0';
+    z <= '1' when output_sig = "00000000" else '0';
 
 END ARCHITECTURE;
