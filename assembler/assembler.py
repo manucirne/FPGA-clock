@@ -71,9 +71,9 @@ class Line_Assemble:
         if self.get_instruction_type() == 'r':
             output = self.get_r_instruction(instruct) + self.get_register(args[2]) + self.get_register(args[1]) + self.get_register(args[0])
         elif self.get_instruction_type() == 'i' and len(args) == 2:
-            output = self.get_i_instruction(instruct) + self.get_register(args[0]) +  self.get_register(args[1]) + self.get_immediate(args[0])
+            output = self.get_i_instruction(instruct) + self.get_register(args[0]) +  self.get_register(args[1]) + self.get_immediate(args[0], 8)
         elif self.get_instruction_type() == 'i' and len(args) == 3:
-            output = self.get_i_instruction(instruct) + self.get_register(args[2]) + self.get_register(args[1]) + self.get_immediate(args[0])
+            output = self.get_i_instruction(instruct) + self.get_register(args[2]) + self.get_register(args[1]) + self.get_immediate(args[0], 8)
         elif self.get_instruction_type() == 'j' and len(args) == 1:
             output = self.get_j_instruction(instruct) + "0"*8 + self.get_j_address(args[0])
         elif self.get_instruction_type() == 'j' and len(args) == 2:
@@ -126,15 +126,15 @@ class Line_Assemble:
         logging.debug('register: {}'.format(r))
         return r
 
-    def get_immediate(self, immediate):
+    def get_immediate(self, immediate, size):
 
         if '$' in immediate and '(' in immediate:
             immediate = immediate[immediate.find('$')+1:immediate.find('(')]
-            r = bindigits(int(immediate), 16)
+            
         elif '$' in immediate:
             immediate = immediate[immediate.find('$')+1:]
-            r = bindigits(int(immediate), 8)
 
+        r = bindigits(int(immediate), size)
         logging.debug('immediate: {}'.format(r))
         return r
 
@@ -167,7 +167,7 @@ class MIPS_String_Format:
 
 
 class MIPS_MIF_Format:
-    def __init__(self, addr=14, data_width=32, increment_by=1):
+    def __init__(self, addr=14, data_width=28, increment_by=1):
         self.addr = addr
         self.data_width = data_width
         self.current_addr = 0
@@ -190,7 +190,7 @@ class MIPS_MIF_Format:
 
     def end(self):
         if self.current_addr < 2**self.addr-1:
-            self.stream.write('[{}..{}]:   {};\n'.format(self.current_addr, 2**self.addr-1, ''.zfill(32)))
+            self.stream.write('[{}..{}]:   {};\n'.format(self.current_addr, 2**self.addr-1, ''.zfill(self.data_width)))
         self.stream.write('END;\n')
 
 class MIPS_Assemble:
