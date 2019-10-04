@@ -20,7 +20,7 @@
 *.smsg
 *.sof
 *.sopc_builder
-*.summary
+*.summary   
 *.tcl
 *.txt # Explicitly add any text files used
 *~
@@ -35,3 +35,5 @@ simulation/
 timing/
 testbench/
 *_sim/
+
+output.mif
