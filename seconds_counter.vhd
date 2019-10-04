@@ -36,12 +36,12 @@ architecture conta of seconds_counter is
 				else 
 					ticks <= ticks + 1;
 					if fast_foward = '1' then 
-						if ticks = ALTERNATIVE_FREQ then
+						if ticks >= ALTERNATIVE_FREQ then
 							ticks <= 0;
 							q <= '1';
 						end if;
 					else
-						if ticks = FAST_CLK_FREQ - 1 then
+						if ticks >= FAST_CLK_FREQ - 1 then
 							ticks <= 0;
 							q <= '1';
 						end if;
