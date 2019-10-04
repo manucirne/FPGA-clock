@@ -19,7 +19,8 @@ entity UC is
 			 muxULAMem : out std_logic;
 			 operacao : out std_logic_vector(3 DOWNTO 0);
 			 BRWR : out std_logic;
-			 IOWRRD: out std_logic;
+			 IOWR: out std_logic;
+			 IORD: out std_logic;
 			 Jump  : out std_logic
     );
 end entity;
@@ -49,12 +50,13 @@ begin
 	DADO <= content(to_integer(unsigned(Endereco)));
 	
 	Jump <= (jumpsig1 AND Endereco(3) AND (not Endereco(2)));
-	muxim <= DADO(8);
-	muxAC <= DADO(7);
-	muxULAMem <= DADO(6);
+	muxim <= DADO(9);
+	muxAC <= DADO(8);
+	muxULAMem <= DADO(7);
 	operacao <= DADO(3 DOWNTO 0);
 	BRWR <= DADO(4);
-	IOWRRD <= DADO(5);
+	IOWR <= DADO(6);
+	IORD <= DADO(5);
 	
 		  
 end architecture;

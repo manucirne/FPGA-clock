@@ -32,7 +32,7 @@ ENTITY relogio IS
 END ENTITY;
 
 ARCHITECTURE rtl OF relogio IS 
-	 SIGNAL wrrdiosignal : std_logic;
+	 SIGNAL wrrdiosignal, rdiosignal : std_logic;
 	 SIGNAL pcsigaddr: std_logic_vector(15 downto 0);
 	 SIGNAL dataRDsigio, dataWRsigio, addrsigio : std_logic_vector(7 downto 0);
 	 SIGNAL instsigrom : std_logic_vector(27 downto 0);
@@ -70,6 +70,7 @@ BEGIN
         dataioout =>dataWRsigio,
         instructionaddr => pcsigaddr,
         WRRDio => wrrdiosignal,
+		  RDio => rdiosignal,
         ioaddr => addrsigio
 		);
 				  
@@ -91,6 +92,7 @@ BEGIN
 			  data_write  =>dataWRsigio,
 			  addr  => addrsigio,
 			  write_enable => wrrdiosignal,
+			  read_enable => rdiosignal,
 			  clk => tick,
 			  SWitchesin => SW,
 			  KEYbutz => KEY

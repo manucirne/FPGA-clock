@@ -18,6 +18,7 @@ ENTITY cpu IS
         dataioout : OUT std_logic_vector((sizeio - 1) DOWNTO 0);
         instructionaddr : OUT std_logic_vector((sizepc - 1) DOWNTO 0);
         WRRDio : OUT std_logic;
+		  RDio : OUT std_logic;
         ioaddr : OUT std_logic_vector((sizeio - 1) DOWNTO 0)
 
     );
@@ -25,7 +26,7 @@ ENTITY cpu IS
 END ENTITY;
 
 ARCHITECTURE rtl OF cpu IS 
-	 SIGNAL jumpsignal, muxULAMemsignal, muximsignal, muxACsignal, zsig, ngsig, WRBRsignal, WRRDiosignal : std_logic;
+	 SIGNAL jumpsignal, muxULAMemsignal, muximsignal, muxACsignal, zsig, ngsig, WRBRsignal, WRRDiosignal, RDiosignal : std_logic;
 	 SIGNAL ACsignal, ULAMemsignal, ulaoutsignal, Cregsignal, Bregsignal, ulainsignal : std_logic_vector(7 downto 0);
 	 SIGNAL instructionaddrsig : std_logic_vector(15 downto 0);
 	 SIGNAL operacaosignal : std_logic_vector(3 downto 0);
@@ -120,11 +121,13 @@ BEGIN
 			  muxULAMem => muxULAMemsignal,
 			  BRWR => WRBRsignal,
 			  IOWRRD => WRRDiosignal,
+			  IORD => RDiosignal,
 			  Jump => jumpsignal
 			  );
 			  
 	 dataioout <= Cregsignal;
 	 WRRDio <= WRRDiosignal;
+	 RDio <= RDiosignal;
 	 ioaddr <= ulaoutsignal;
 	 instructionaddr <= instructionaddrsig;
 END ARCHITECTURE;
