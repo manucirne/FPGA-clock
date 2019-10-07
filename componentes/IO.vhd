@@ -4,7 +4,7 @@ use ieee.std_logic_1164.all;
 entity IO is
     port(
         data_read   : out std_logic_vector(7 downto 0);
-        display0out, display1out, display2out, display3out, display4out, display5out: OUT STD_LOGIC_VECTOR(6 downto 0);
+        display0out, display1out, display2out, display3out, display4out, display5out, display6out: OUT STD_LOGIC_VECTOR(6 downto 0);
         data_write  : in  std_logic_vector(7 downto 0);
         addr        : in  std_logic_vector(7 downto 0);
 		  read_enable : in  std_logic;
@@ -17,7 +17,7 @@ entity IO is
 end IO;
 
 architecture conections of IO is
-    signal en7seg0,en7seg1,en7seg2,en7seg3,en7seg4,en7seg5 : std_logic;
+    signal en7seg0,en7seg1,en7seg2,en7seg3,en7seg4,en7seg5, en7seg6 : std_logic;
     signal enable_bot,enable_bot_read, enable_bot_write : std_logic;
     signal enable_sw_read,enable_sw1_read, enable_sw2_read : std_logic;
     signal enable_time,enable_time_read, enable_time_write : std_logic;
@@ -25,7 +25,7 @@ architecture conections of IO is
     signal data_read_bus, data_write_bus : std_logic_vector(7 downto 0);
     signal ext_sw : std_logic_vector(17 downto 0);
     signal ext_keys : std_logic_vector(3 downto 0);
-    signal d0,d1,d2,d3,d4,d5 : std_logic_vector(6 downto 0);
+    signal d0,d1,d2,d3,d4,d5, d6 : std_logic_vector(6 downto 0);
 begin
     --Upper 4 bits of the address
     upper_ORed <= addr(7) or addr(6) or addr(5) or addr(4);
@@ -51,7 +51,8 @@ begin
     en7seg2 <= write_enable when (addr = "00001000") else '0'; 
     en7seg3 <= write_enable when (addr = "00001001") else '0'; 
     en7seg4 <= write_enable when (addr = "00001010") else '0'; 
-    en7seg5 <= write_enable when (addr = "00001011") else '0'; 
+    en7seg5 <= write_enable when (addr = "00001011") else '0';
+	 en7seg6 <= write_enable when (addr = "00001100") else '0';
 
     ext_sw <= SWitchesin;
     
@@ -156,6 +157,16 @@ begin
         d7seg => d5,
 		  clock => clk,
         write_enable => en7seg5,
+        data_write => data_write_bus
+    );
+	 
+	 display6out <= d6;
+
+    disp6 : entity work.display
+    port map(
+        d7seg => d6,
+		  clock => clk,
+        write_enable => en7seg6,
         data_write => data_write_bus
     );
 	 

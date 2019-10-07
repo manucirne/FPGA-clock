@@ -20,7 +20,7 @@ ENTITY relogio IS
 			 SW : in STD_LOGIC_VECTOR(17 downto 0);
 			 KEY : IN STD_LOGIC_VECTOR(3 downto 0);
 		  --OUT
-		  HEX2, HEX3, HEX4, HEX5, HEX6, HEX7 : OUT STD_LOGIC_VECTOR(6 downto 0);
+		  HEX0 ,HEX2, HEX3, HEX4, HEX5, HEX6, HEX7 : OUT STD_LOGIC_VECTOR(6 downto 0);
 		  LEDG : OUT std_logic_vector(7 downto 0)
     );
 
@@ -70,6 +70,7 @@ BEGIN
 			  display3out => HEX5, 
 			  display4out => HEX6, 
 			  display5out => HEX7,
+			  display6out => HEX0,
 			  data_write  =>dataWRsigio,
 			  addr  => addrsigio,
 			  write_enable => wrrdiosignal,

@@ -43,11 +43,7 @@ begin
                             "0000000" when dadoHex="1000" else ---8
                             "0010000" when dadoHex="1001" else ---9
                             "0001000" when dadoHex="1010" else ---A
-                            "0000011" when dadoHex="1011" else ---B
-                            "1000110" when dadoHex="1100" else ---C
-                            "0100001" when dadoHex="1101" else ---D
-                            "0000110" when dadoHex="1110" else ---E
-                            "0001110" when dadoHex="1111" else ---F
+                            "0001100" when dadoHex="1011" else ---P
                             "1111111"; -- Apaga todos segmentos.
 
     saida7seg <=     "1100010" when (overFlow='1') else
