@@ -27,13 +27,13 @@
 
 # am -> AM / PM (Se am==0 => Modo 12 hras)
 
-addi $0, %zero, %rl0
-addi $0, %zero, %rl1
-addi $0, %zero, %rl2
-addi $0, %zero, %rl3
-addi $0, %zero, %rl4
-addi $0, %zero, %rl5
-addi $0, %zero, %am
+    addi $0, %zero, %rl0
+    addi $0, %zero, %rl1
+    addi $0, %zero, %rl2
+    addi $0, %zero, %rl3
+    addi $0, %zero, %rl4
+    addi $0, %zero, %rl5
+    addi $0, %zero, %am
 
 loop:
 
@@ -45,10 +45,10 @@ je %mod, modifica
 
 base:
 lea $0(%zero), %t0 # Base de tempo
-xori $0, %t0, %t1 # Xor com a base de tempo
-je %t1, display # Se a base de tempo != realiza jump
-wea $1, $0(%zero) # Faz a leitura da base de tempo
-addi $1, %rl5, %rl5
+je %t0, display # Se a base de tempo != realiza jump
+addi $1, %t1, %t1
+wea %t1, $1(%zero) # Faz a leitura da base de tempo
+addi $1, %rl5, %rl5 # Adiciona 1 segundo
 
 # Se não estourar os segundos acaba os ajustes
 # Se chegar no limite, zera a unidade dos segundos
@@ -102,9 +102,7 @@ jg %t0, display
 andi $0, %rl1, %rl1
 andi $0, %rl0, %rl0
 
-
 jg %mod, display # Pula o modifica
-
 modifica:
 lea $4(%zero), %t0 # Botão soma
 andi $1, %t0, %t0
