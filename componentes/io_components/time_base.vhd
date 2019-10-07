@@ -23,7 +23,7 @@ begin
 	time_counter : entity work.seconds_counter 
 	generic map(
 		FAST_CLK_FREQ => 50e6,
-		ALTERNATIVE_FREQ => 1e6
+		ALTERNATIVE_FREQ => 1e4
 		
 	)
 	port map(
