@@ -68,7 +68,7 @@ A unidade de controle
 
 [UC](/design/rtl/uc.pdf)
 
-[ULA](/design/rtl/ulas.pdf)
+[ULA](/design/rtl/ula.pdf)
 
 [fluxo-pdf]: /design/fluxo.pdf "Fluxo de dados"
 [controle]: /design/PontosDeControleTable.pdf "Title"
