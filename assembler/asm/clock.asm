@@ -37,6 +37,7 @@ addi $0, %zero, %rl6
 addi $0, %zero, %rl7
 
 addi $0, %zero, %am
+addi $0, %zero, %pm
 
 loop:
 
@@ -110,6 +111,7 @@ jg %t0, ajuste24
 # Zera as horas
 andi $0, %rl0, %rl0
 addi $1, %zero, %rl1
+xori $1, %pm, %pm 
 
 # Verifica se a hora chegou em 24
 ajuste24:
@@ -134,6 +136,14 @@ andi $2, %t0, %t0
 xori $2, t0, %am # Xor com a máscara
 jg %am, display24 # Se am != 0 vai para o modo 24 hras
 
+jg %pm, botaPM
+addi $10, %zero, %40
+jmp display12
+botaPM:
+addi $11, %zero, %40
+
+display12:
+wea %40, $12(%zero) 
 wea %rl0, $11(%zero)
 wea %rl1, $10(%zero)
 wea %rl2, $9(%zero)
@@ -144,6 +154,8 @@ jmp loop
 
 # Colocar tudo no display 24
 display24:
+addi $12, %zero, %40
+wea %40,  $12(zero)
 wea %rl6, $11(%zero)
 wea %rl7, $10(%zero)
 wea %rl2, $9(%zero)
