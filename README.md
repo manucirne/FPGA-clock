@@ -2,6 +2,10 @@
 
 ## Introdução
 
+## Funcionamento
+
+![fluxo](/design/func.svg)
+
 ## Arquitetura
 
 A arquitetura do processador é registrador restridador.
