@@ -8,7 +8,7 @@
 
 ## Arquitetura
 
-A arquitetura do processador é registrador restridador.
+A arquitetura do processador é registrador registrador.
 
 ## Fluxo de dados
 
@@ -41,10 +41,6 @@ JG   (%C), label
 JN   (%C), label
 JE   (%C), label
 ```
-
-## Unidade de controle
-
-A unidade de controle
 
 ## Formato de instruções
 
