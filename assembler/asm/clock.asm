@@ -25,6 +25,7 @@
 
 # mod -> Modifica hora e minuto
 
+# pm -> PM (verifica se é de manhã ou anoite)
 # am -> AM / PM (Se am==0 => Modo 12 hras)
 
 addi $0, %zero, %rl0
@@ -38,7 +39,7 @@ addi $0, %zero, %am
 
 loop:
 
-lea $3(%zero), %t1 # Switch de modificação
+lea $2(%zero), %t1 # Switch de modificação
 andi $1, %t1, %t1
 xori $1, t1, %mod # Xor com a máscara
 je %mod, modifica
@@ -67,7 +68,6 @@ andi $0, %rl4, %rl4
 # Incrementa um minuto
 addi $1, %rl3, %rl3
 
-
 ajusteMinuto:
 subi $10, %rl3, %t0
 jg %t0, display
@@ -82,7 +82,7 @@ jg %t0, display
 andi $0, %rl2, %rl2
 
 # Adiciona uma hora
-addi $1, %rl1, %rl1 
+addi $1, %rl1, %rl1
 
 # Verifica se a unidade de horas passou de 9
 subi $10, %rl1, %t0
@@ -101,12 +101,17 @@ jg %t0, display
 andi $0, %rl1, %rl1
 andi $0, %rl0, %rl0
 
+addi $1, %pm, %pm
+xori $2, %pm, %t0
+jg %pm, display
+add %zero, %zero, %pm
+
 # Colocar tudo no display
 display:
-lea $3(%zero), %t0 # Switch de am/pm
+lea $2(%zero), %t0 # Switch de am/pm
 andi $2, %t0, %t0
 xori $2, t0, %am # Xor com a máscara
-jg %am, ajuste24 # Se am != 0 vai para o modo 24 hras
+jg %am, display24 # Se am != 0 vai para o modo 24 hras
 
 wea %rl0, $11(%zero)
 wea %rl1, $10(%zero)
@@ -116,19 +121,10 @@ wea %rl4, $7(%zero)
 wea %rl5, $6(%zero)
 jmp loop
 
-ajuste24:
-# Adiciona 2 horas na unidade
-addi $2, %rl1, %t1
-# Se passou de 10, a dezena é 2, e a unidade é o resto
-subi $10, %t1, %t2
-jg %t2, display24
-addi $1, %rl0, %t0
-addi $0, %t2, %t1
-# Adiciona 1 na hora
+
 display24:
-addi $1, %rl0, %t0
-wea %t0, $11(%zero)
-wea %t1, $10(%zero)
+wea %rl6, $11(%zero)
+wea %rl7, $10(%zero)
 wea %rl2, $9(%zero)
 wea %rl3, $8(%zero)
 wea %rl4, $7(%zero)
@@ -146,13 +142,3 @@ wea %t1, $5(%zero) # Clear do botão
 jg %t0, loop
 addi $1, %rl3, %rl3
 jmp ajusteMinuto
-
-# iniciaCronometro:
-# addi $0, %zero, %cr0
-# addi $0, %zero, %cr1
-# addi $0, %zero, %cr2
-# addi $0, %zero, %cr3
-# addi $0, %zero, %cr4
-# addi $0, %zero, %cr5
-# cronometro:
-# jmp cronometro
