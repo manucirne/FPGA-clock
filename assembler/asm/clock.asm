@@ -38,10 +38,6 @@ addi $0, %zero, %am
 
 loop:
 
-lea $3(%zero), %t0 # Switch de am/pm
-andi $2, %t0, %t0
-xori $2, t0, %am # Xor com a máscara
-
 lea $3(%zero), %t1 # Switch de modificação
 andi $1, %t1, %t1
 xori $1, t1, %mod # Xor com a máscara
@@ -107,7 +103,11 @@ andi $0, %rl0, %rl0
 
 # Colocar tudo no display
 display:
+lea $3(%zero), %t0 # Switch de am/pm
+andi $2, %t0, %t0
+xori $2, t0, %am # Xor com a máscara
 jg %am, ajuste24 # Se am != 0 vai para o modo 24 hras
+
 wea %rl0, $11(%zero)
 wea %rl1, $10(%zero)
 wea %rl2, $9(%zero)
