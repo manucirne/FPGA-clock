@@ -54,7 +54,7 @@ BEGIN
 	 PROCESS (sel, soma_sig, sub_sig, a, b)
     BEGIN
 	 
-		  ng <= '0';
+		  ng <= output(size-1);
 		  
         CASE sel IS
             WHEN "0000" =>
