@@ -27,21 +27,25 @@
 
 # am -> AM / PM (Se am==0 => Modo 12 hras)
 
-    addi $0, %zero, %rl0
-    addi $0, %zero, %rl1
-    addi $0, %zero, %rl2
-    addi $0, %zero, %rl3
-    addi $0, %zero, %rl4
-    addi $0, %zero, %rl5
-    addi $0, %zero, %am
+addi $0, %zero, %rl0
+addi $0, %zero, %rl1
+addi $0, %zero, %rl2
+addi $0, %zero, %rl3
+addi $0, %zero, %rl4
+addi $0, %zero, %rl5
+
+addi $0, %zero, %am
 
 loop:
 
-lea $3(%zero), %t0 # Base de tempo
-andi $1, %t0, t0
-xori $1, t0, %mod # Xor com a base de tempo
-je %mod, modifica
+lea $3(%zero), %t0 # Switch de am/pm
+andi $2, %t0, %t0
+xori $2, t0, %am # Xor com a máscara
 
+lea $3(%zero), %t1 # Switch de modificação
+andi $1, %t1, %t1
+xori $1, t1, %mod # Xor com a máscara
+je %mod, modifica
 
 base:
 lea $0(%zero), %t0 # Base de tempo
@@ -67,9 +71,8 @@ andi $0, %rl4, %rl4
 # Incrementa um minuto
 addi $1, %rl3, %rl3
 
-# MINUTO
-# Minuto unidades
-ajusteMin:
+
+ajusteMinuto:
 subi $10, %rl3, %t0
 jg %t0, display
 andi $0, %rl3, %rl3
@@ -102,24 +105,6 @@ jg %t0, display
 andi $0, %rl1, %rl1
 andi $0, %rl0, %rl0
 
-jg %mod, display # Pula o modifica
-modifica:
-lea $4(%zero), %t0 # Botão soma
-andi $1, %t0, %t0
-xori $1, %t0, %t0 # Xor com a base de tempo
-jg %t0, checkModifica
-addi $1, %zero, %t1
-wea %t1, $5(%zero) # Clear do botão
-addi $1, %rl3, %rl3
-jmp ajusteMin
-
-# Se o botão ainda estiver ativado permanece na função
-checkModifica:
-lea $3(%zero), %t0 # Base de tempo
-andi $1, %t0, t0
-xori $1, t0, %mod # Xor com a base de tempo
-je %mod, modifica
-
 # Colocar tudo no display
 display:
 jg %am, ajuste24 # Se am != 0 vai para o modo 24 hras
@@ -138,16 +123,36 @@ addi $2, %rl1, %t1
 subi $10, %t1, %t2
 jg %t2, display24
 addi $1, %rl0, %t0
-addi $0, %t1, %t1
+addi $0, %t2, %t1
 # Adiciona 1 na hora
 display24:
 addi $1, %rl0, %t0
-
 wea %t0, $11(%zero)
 wea %t1, $10(%zero)
 wea %rl2, $9(%zero)
 wea %rl3, $8(%zero)
 wea %rl4, $7(%zero)
 wea %rl5, $6(%zero)
-
 jmp loop
+
+
+modifica:
+lea $4(%zero), %t0 # Botão soma
+andi $1, %t0, %t0
+xori $1, %t0, %t0 # Xor com a base de tempo
+addi $1, %zero, %t1
+wea %t1, $5(%zero) # Clear do botão
+
+jg %t0, loop
+addi $1, %rl3, %rl3
+jmp ajusteMinuto
+
+# iniciaCronometro:
+# addi $0, %zero, %cr0
+# addi $0, %zero, %cr1
+# addi $0, %zero, %cr2
+# addi $0, %zero, %cr3
+# addi $0, %zero, %cr4
+# addi $0, %zero, %cr5
+# cronometro:
+# jmp cronometro
