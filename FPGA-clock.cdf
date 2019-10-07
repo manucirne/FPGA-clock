@@ -4,7 +4,7 @@ JedecChain;
 	DefaultMfr(6E);
 
 	P ActionCode(Cfg)
-		Device PartName(EP4CE115F29) Path("/home/david/Documents/Insper/design-computadores/FPGA-clock/") File("FPGA-clock.sof") MfrSpec(OpMask(1));
+		Device PartName(EP4CE115F29) Path("C:/Users/manuc/Desktop/insper/sem6/Arquit/FPGA-clock/") File("FPGA-clock.sof") MfrSpec(OpMask(1));
 
 ChainEnd;
 

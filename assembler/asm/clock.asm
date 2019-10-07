@@ -25,15 +25,16 @@
 
 # mod -> Modifica hora e minuto
 
-# pm -> PM (verifica se é de manhã ou anoite)
 # am -> AM / PM (Se am==0 => Modo 12 hras)
 
-addi $0, %zero, %rl0
-addi $0, %zero, %rl1
+addi $1, %zero, %rl0
+addi $2, %zero, %rl1
 addi $0, %zero, %rl2
 addi $0, %zero, %rl3
 addi $0, %zero, %rl4
 addi $0, %zero, %rl5
+addi $0, %zero, %rl6
+addi $0, %zero, %rl7
 
 addi $0, %zero, %am
 
@@ -83,30 +84,50 @@ andi $0, %rl2, %rl2
 
 # Adiciona uma hora
 addi $1, %rl1, %rl1
+addi $1, %rl7, %rl7
 
-# Verifica se a unidade de horas passou de 9
+ajustaHora:
+# Verifica se a unidade de horas passou de 9 no reg de 12
 subi $10, %rl1, %t0
-jg %t0, ajuste12
+jg %t0, ajuste924
 andi $0, %rl1, %rl1
 addi $1, %rl0, %rl0
+
+# Verifica se a unidade de horas passou de 9 no reg de 24
+ajuste924:
+subi $10, %rl7, %t1
+jg %t1, ajuste12
+andi $0, %rl7, %rl7
+addi $1, %rl6, %rl6
 
 # Verifica se a hora chegou em 12
 ajuste12:
 xori $1, %rl0, %t0
-xori $2, %rl1, %t1
+xori $3, %rl1, %t1
+add %t0, %t1, %t0
+jg %t0, ajuste24
+
+# Zera as horas
+andi $0, %rl0, %rl0
+addi $1, %zero, %rl1
+
+# Verifica se a hora chegou em 24
+ajuste24:
+xori $2, %rl6, %t0
+xori $4, %rl7, %t1
 add %t0, %t1, %t0
 jg %t0, display
 
 # Zera as horas
-andi $0, %rl1, %rl1
-andi $0, %rl0, %rl0
+andi $0, %rl6, %rl6
+andi $0, %rl7, %rl7
 
 addi $1, %pm, %pm
 xori $2, %pm, %t0
 jg %pm, display
 add %zero, %zero, %pm
 
-# Colocar tudo no display
+# Colocar tudo no display 12
 display:
 lea $2(%zero), %t0 # Switch de am/pm
 andi $2, %t0, %t0
@@ -121,7 +142,7 @@ wea %rl4, $7(%zero)
 wea %rl5, $6(%zero)
 jmp loop
 
-
+# Colocar tudo no display 24
 display24:
 wea %rl6, $11(%zero)
 wea %rl7, $10(%zero)
@@ -131,7 +152,7 @@ wea %rl4, $7(%zero)
 wea %rl5, $6(%zero)
 jmp loop
 
-
+# sjuste de hora 
 modifica:
 lea $4(%zero), %t0 # Botão soma
 andi $1, %t0, %t0
@@ -139,6 +160,19 @@ xori $1, %t0, %t0 # Xor com a base de tempo
 addi $1, %zero, %t1
 wea %t1, $5(%zero) # Clear do botão
 
-jg %t0, loop
+jg %t0, buthora
 addi $1, %rl3, %rl3
 jmp ajusteMinuto
+
+buthora:
+lea $4(%zero), %t2 # Botão soma
+andi $2, %t2, %t2
+xori $2, %t2, %t2 # Xor com a base de tempo
+addi $2, %zero, %t3
+wea %t3, $5(%zero) # Clear do botão
+
+jg %t2, display
+addi $1, %rl1, %rl1
+addi $1, %rl7, %rl7
+jmp ajustaHora
+
