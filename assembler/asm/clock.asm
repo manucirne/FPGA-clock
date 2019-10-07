@@ -9,10 +9,10 @@
 #       Inicialização dos dados de alocação estática
 #====================================================================
 
-
 #====================================================================
 #       Programa
 #====================================================================
+# O padrão de horário é 12:59
 
 # rl0 -> Horas dezena
 # rl1 -> Horas unidade
@@ -23,7 +23,9 @@
 # rl4 -> Segundos dezena
 # rl5 -> Segundos unidade
 
-# rl6 -> AM / PM 
+# mod -> Modifica hora e minuto
+
+# am -> AM / PM (Se am==0 => Modo 12 hras)
 
 addi $0, %zero, %rl0
 addi $0, %zero, %rl1
@@ -31,17 +33,123 @@ addi $0, %zero, %rl2
 addi $0, %zero, %rl3
 addi $0, %zero, %rl4
 addi $0, %zero, %rl5
-addi $0, %zero, %rl6
+addi $0, %zero, %am
 
 loop:
 
-segundo:
+lea $3(%zero), %t0 # Base de tempo
+andi $1, %t0, t0
+xori $1, t0, %mod # Xor com a base de tempo
+je %mod, modifica
+
+
+base:
 lea $0(%zero), %t0 # Base de tempo
 xori $0, %t0, %t1 # Xor com a base de tempo
-je %t1, prox # Se a base de tempo != realiza jump
+je %t1, display # Se a base de tempo != realiza jump
 wea $1, $0(%zero) # Faz a leitura da base de tempo
 addi $1, %rl5, %rl5
 
-prox:
-addi $1, %rl5, %rl5
+# Se não estourar os segundos acaba os ajustes
+# Se chegar no limite, zera a unidade dos segundos
+# Adiciona 1 na dezena de segundos
+ajuste:
+subi $10, %rl5, %t0
+jg %t0, display
+andi $0, %rl5, %rl5
+addi $1, %rl4, %rl4
+
+# Verifica se estourou a dezena de segundos
+subi $6, %rl4, %t0
+jg %t0, display
+andi $0, %rl4, %rl4
+
+# Incrementa um minuto
+addi $1, %rl3, %rl3
+
+# MINUTO
+# Minuto unidades
+ajusteMin:
+subi $10, %rl3, %t0
+jg %t0, display
+andi $0, %rl3, %rl3
+
+# Incrementa a dezena de minuto
+addi $1, %rl2, %rl2 
+
+# Verifica se estourou a dezena de minutos
+subi $6, %rl2, %t0
+jg %t0, display
+andi $0, %rl2, %rl2
+
+# Adiciona uma hora
+addi $1, %rl1, %rl1 
+
+# Verifica se a unidade de horas passou de 9
+subi $10, %rl1, %t0
+jg %t0, ajuste12
+andi $0, %rl1, %rl1
+addi $1, %rl0, %rl0
+
+# Verifica se a hora chegou em 12
+ajuste12:
+xori $1, %rl0, %t0
+xori $2, %rl1, %t1
+add %t0, %t1, %t0
+jg %t0, display
+
+# Zera as horas
+andi $0, %rl1, %rl1
+andi $0, %rl0, %rl0
+
+
+jg %mod, display # Pula o modifica
+
+modifica:
+lea $4(%zero), %t0 # Botão soma
+andi $1, %t0, %t0
+xori $1, %t0, %t0 # Xor com a base de tempo
+jg %t0, checkModifica
+addi $1, %zero, %t1
+wea %t1, $5(%zero) # Clear do botão
+addi $1, %rl3, %rl3
+jmp ajusteMin
+
+# Se o botão ainda estiver ativado permanece na função
+checkModifica:
+lea $3(%zero), %t0 # Base de tempo
+andi $1, %t0, t0
+xori $1, t0, %mod # Xor com a base de tempo
+je %mod, modifica
+
+# Colocar tudo no display
+display:
+jg %am, ajuste24 # Se am != 0 vai para o modo 24 hras
+wea %rl0, $11(%zero)
+wea %rl1, $10(%zero)
+wea %rl2, $9(%zero)
+wea %rl3, $8(%zero)
+wea %rl4, $7(%zero)
+wea %rl5, $6(%zero)
+jmp loop
+
+ajuste24:
+# Adiciona 2 horas na unidade
+addi $2, %rl1, %t1
+# Se passou de 10, a dezena é 2, e a unidade é o resto
+subi $10, %t1, %t2
+jg %t2, display24
+addi $1, %rl0, %t0
+addi $0, %t1, %t1
+# Adiciona 1 na hora
+display24:
+addi $1, %rl0, %t0
+
+wea %t0, $11(%zero)
+wea %t1, $10(%zero)
+wea %rl2, $9(%zero)
+wea %rl3, $8(%zero)
+wea %rl4, $7(%zero)
+wea %rl5, $6(%zero)
+
 jmp loop
