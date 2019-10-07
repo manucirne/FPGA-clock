@@ -21,15 +21,15 @@
  
  architecture rtl of sub is
  
- signal i_sum: std_logic_vector(size downto 0);
+ signal i_sum: std_logic_vector((size - 1) downto 0);
  
  begin
  -- concatena 0 na frente do vetor e o cin no final
- i_sum <= ('0' & a) - ('0' & b);
+ i_sum <= (a) - (b);
  
  sum <= i_sum((size-1) downto 0);
  
  -- seleciona o bit mais significativo como carry
- cout <= i_sum(size);
+ cout <= i_sum(size-1);
  
  end rtl;
