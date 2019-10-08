@@ -97,21 +97,27 @@ addi $1, %rl0, %rl0
 # Verifica se a unidade de horas passou de 9 no reg de 24
 ajuste924:
 subi $10, %rl7, %t1
-jg %t1, ajuste12
+jg %t1, verificaampm
 andi $0, %rl7, %rl7
 addi $1, %rl6, %rl6
 
+# verifica se é am ou pm
+verificaampm:
+xori $1, %rl0, %t0
+xori $2, %rl1, %t1
+add %t0, %t1, %t0
+jg %t0, ajuste12
+xori $1, %pm, %pm 
 # Verifica se a hora chegou em 12
 ajuste12:
 xori $1, %rl0, %t0
 xori $3, %rl1, %t1
 add %t0, %t1, %t0
 jg %t0, ajuste24
-
+ 
 # Zera as horas
 andi $0, %rl0, %rl0
 addi $1, %zero, %rl1
-xori $1, %pm, %pm 
 
 # Verifica se a hora chegou em 24
 ajuste24:
@@ -124,11 +130,6 @@ jg %t0, display
 andi $0, %rl6, %rl6
 andi $0, %rl7, %rl7
 
-addi $1, %pm, %pm
-xori $2, %pm, %t0
-jg %pm, display
-add %zero, %zero, %pm
-
 # Colocar tudo no display 12
 display:
 lea $2(%zero), %t0 # Switch de am/pm
@@ -136,11 +137,7 @@ andi $2, %t0, %t0
 xori $2, t0, %am # Xor com a máscara
 jg %am, display24 # Se am != 0 vai para o modo 24 hras
 
-jg %pm, botaPM
-addi $10, %zero, %40
-jmp display12
-botaPM:
-addi $11, %zero, %40
+addi $10, %pm, %40
 
 display12:
 wea %40, $12(%zero) 
