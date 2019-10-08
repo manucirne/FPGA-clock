@@ -716,7 +716,6 @@ set_global_assignment -name MIF_FILE assembler/output.mif
 set_global_assignment -name VHDL_FILE componentes/io_components/display.vhd
 set_global_assignment -name VHDL_FILE componentes/io_components/flipflop.vhd
 set_global_assignment -name VHDL_FILE componentes/io_components/buttons.vhd
-set_global_assignment -name VHDL_FILE exemplos/numerosteste.vhd
 set_global_assignment -name VHDL_FILE componentes/io_components/time_base.vhd
 set_global_assignment -name MIF_FILE initROM.mif
 set_global_assignment -name VHDL_FILE operacoes/ula.vhd
