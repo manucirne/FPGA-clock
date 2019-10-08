@@ -35,7 +35,6 @@ begin
 
 	signalExtSW <= switch(17);
 	signal_clear <= data_write(0) AND write_enable;
-
 	data_read <= (0 => signal3state, others => '0') when(read_enable = '1') else (others => 'Z');
 
 end architecture;
