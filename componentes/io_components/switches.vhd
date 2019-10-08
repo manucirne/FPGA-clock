@@ -1,6 +1,7 @@
 library ieee;
 use ieee.std_logic_1164.all;
 
+-- switches
 entity switches is
 	generic(
 		start : natural := 7;

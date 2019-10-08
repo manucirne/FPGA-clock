@@ -6,8 +6,8 @@ entity mux4 is
     port (
         a0    : in  std_logic;
         a1    : in  std_logic;
-		  a2    : in  std_logic;
-		  a3    : in  std_logic;
+        a2    : in  std_logic;
+        a3    : in  std_logic;
         sel   : in  std_logic_vector(1 downto 0);
         res   : out std_logic
     );

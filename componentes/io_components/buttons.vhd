@@ -1,6 +1,7 @@
 library ieee;
 use ieee.std_logic_1164.all;
 
+-- enitidade dos push buttons
 entity buttons is 
 	port(
 		write_enable : in  std_logic;
@@ -14,20 +15,17 @@ end buttons;
 
 architecture comportamento of buttons is
 	signal signal_clear : std_logic_vector(3 downto 0);
-	signal signal_3state : std_logic_vector(3 downto 0);
+	signal signal_3state : std_logic_vector(3 downto 0); -- signal para o clear dos botões
 	signal signal_3state_8 : std_logic_vector(7 downto 0) := (others => '0');
 	
-	
 begin
-
-	
-	
 	-- Clear dos botões
 	signal_clear(0) <= data_write(0) AND write_enable;
 	signal_clear(1) <= data_write(1) AND write_enable;
 	signal_clear(2) <= data_write(2) AND write_enable;
 	signal_clear(3) <= data_write(3) AND write_enable;
 	
+	-- flip flop para cada botão
 	reg0 : entity work.flipflop port map(
 			enable => '1',
 			clear => signal_clear(0),
@@ -57,7 +55,7 @@ begin
 	);
 	
 	signal_3state_8(3 downto 0) <= signal_3state; 
-	-- Data read
+	-- Data leitura
 	data_read <= signal_3state_8 when(read_enable = '1') else (others => 'Z');
 	
 end architecture;

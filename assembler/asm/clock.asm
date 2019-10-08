@@ -183,8 +183,8 @@ xori $2, %t2, %t2 # Xor com a base de tempo
 addi $2, %zero, %t3
 wea %t3, $5(%zero) # Clear do botão
 
-jg %t2, display
-addi $1, %rl1, %rl1
-addi $1, %rl7, %rl7
+jg %t2, display # Se o botão não for ativado, jump para p display
+addi $1, %rl1, %rl1 # Adiciona 1 no registrador de 12h
+addi $1, %rl7, %rl7 # Adiciona 1 no registrador de 24h
 jmp ajustaHora
 

@@ -28,24 +28,20 @@ entity BR is
 end entity;
 
 architecture rtl of BR is
-	-- Build a 2-D array type for the regs
+	-- Cria um array 2-D para os registradores
 	subtype word_t is std_logic_vector((larguraDados-1) downto 0);
 	type memory_t is array((2**larguraEndBancoRegs)-1 downto 0) of word_t;
 
-	-- Declare the regs signal.	
+	-- Declaração dos sinais dos registradores
 	signal regs : memory_t;
 	signal enable_A : std_logic;
 	signal sigZero : std_logic_vector((larguraDados  -1) downto 0);
 
-	-- Register to hold the address 
-	-- signal enderecoCreg : std_logic_vector((larguraEndBancoRegs -1) downto 0) := enderecoC;
-	-- signal enderecoAreg : std_logic_vector((larguraEndBancoRegs -1) downto 0) := enderecoA;
-	-- signal enderecoBreg : std_logic_vector((larguraEndBancoRegs -1) downto 0) := enderecoB;
-	
 begin
 	
 	sigZero <= (others => '0');
 	-- Update the register output on the clock's rising edge
+	-- Update do output do registrador na borda de subida do clock
 	process (clk)
 	begin
 		if (rising_edge(clk)) then
@@ -54,8 +50,6 @@ begin
 			end if;
 		end if;
 	end process;
-	
-	--enable_A <= '0' when(enderecoA = "00000000") else escreveA;
 	
 	SaidaC <= sigZero when(enderecoC = "00000000") else regs(to_integer(unsigned(enderecoC)));
 	SaidaB <=  sigZero when(enderecoB = "00000000") else regs(to_integer(unsigned(enderecoB)));
