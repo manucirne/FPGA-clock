@@ -1,3 +1,7 @@
+-- David Fogelman
+-- Manoela Campos
+-- Wesley Gabriel
+
 -- referencia: http://kdientu.duytan.edu.vn/media/50147/design-an-adder-using-vhdl.pdf
 
  library IEEE;

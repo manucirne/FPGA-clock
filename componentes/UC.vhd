@@ -1,12 +1,18 @@
+-- David Fogelman
+-- Manoela Campos
+-- Wesley Gabriel
+
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
+-- A UC funciona como uma rom, decodificando os pontos de controle a partir do opcode
+-- No jump, é realizada leituras das flags da ula.
 entity UC is
-
     generic
     (
         dataWidth : natural := 10;
+		-- largura do opcode
         addrWidth : natural := 4
     );
 
@@ -25,10 +31,12 @@ entity UC is
     );
 end entity;
 
+-- signal para realizar o jump
 architecture initUC of UC is
 SIGNAL jumpsig1 : std_logic;
 SIGNAL DADO : std_logic_vector (dataWidth-1 DOWNTO 0);
 
+-- importação do arquivo
 type memory_t is array (2**addrWidth -1 downto 0) of std_logic_vector (dataWidth-1 downto 0);
 signal content: memory_t;
 attribute ram_init_file : string;

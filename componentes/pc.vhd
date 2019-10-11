@@ -1,3 +1,7 @@
+-- David Fogelman
+-- Manoela Campos
+-- Wesley Gabriel
+
 library IEEE;
 use IEEE.std_logic_1164.all;
 use IEEE.std_logic_unsigned.all;
@@ -43,9 +47,10 @@ BEGIN
 	 
 	PROCESS (clk)
     BEGIN
-	 if rising_edge(clk) then 
-		output_pc <= output_mux;
-		end if;
+        -- se o clock estiver na borda de subida
+        if rising_edge(clk) then 
+            output_pc <= output_mux;
+        end if;
     END PROCESS;
 	 
 	 instr <= output_pc;

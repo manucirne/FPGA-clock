@@ -1,3 +1,7 @@
+-- David Fogelman
+-- Manoela Campos
+-- Wesley Gabriel
+
 library ieee;
 use ieee.std_logic_1164.all;
 
@@ -22,7 +26,9 @@ begin
 
 	time_counter : entity work.seconds_counter 
 	generic map(
+		-- quantidade de clocks para ativar a flag de 1 segundo
 		FAST_CLK_FREQ => 50e6,
+		-- Clock rápido
 		ALTERNATIVE_FREQ => 1e4
 		
 	)
@@ -32,9 +38,10 @@ begin
 		fast_foward => signalExtSW,
 		q => signal3state
 	);
-
+	-- Carrega os valores dos switchs
 	signalExtSW <= switch(17);
 	signal_clear <= data_write(0) AND write_enable;
+	-- Quando não está habilitada a leitura, coloca em alta impedância
 	data_read <= (0 => signal3state, others => '0') when(read_enable = '1') else (others => 'Z');
 
 end architecture;

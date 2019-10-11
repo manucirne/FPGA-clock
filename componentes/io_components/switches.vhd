@@ -1,3 +1,7 @@
+-- David Fogelman
+-- Manoela Campos
+-- Wesley Gabriel
+
 library ieee;
 use ieee.std_logic_1164.all;
 
@@ -22,7 +26,7 @@ architecture comportamento of switches is
 begin 
 	
 	signal_3state <= in_sw(start downto ending);
-	
+	-- Quando não está habilitada a leitura, coloca em alta impedância
 	data_read <=  signal_3state when(read_enable = '1') else (others => 'Z');
 	
 

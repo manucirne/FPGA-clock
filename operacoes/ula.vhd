@@ -1,3 +1,7 @@
+-- David Fogelman
+-- Manoela Campos
+-- Wesley Gabriel
+
 LIBRARY ieee;
 USE ieee.std_logic_1164.ALL;
 USE ieee.numeric_std.ALL;
@@ -5,10 +9,12 @@ USE IEEE.std_logic_unsigned.ALL;
 
 ENTITY ula IS
     GENERIC (
+        -- tamanho de operações da ula
         size : INTEGER := 4
     );
 
     PORT (
+        --entradas da ula
         a : IN std_logic_vector((size - 1) DOWNTO 0);
         b : IN std_logic_vector((size - 1) DOWNTO 0);
         --instrucoes
@@ -23,11 +29,12 @@ ENTITY ula IS
 END ENTITY;
 
 ARCHITECTURE rtl OF ula IS
+    --definição dos signals
     SIGNAL output_sig, soma_sig, sub_sig : std_logic_vector((size - 1) DOWNTO 0);
 	 SIGNAL ng_sig : std_logic := '0';
 
 BEGIN
-
+    -- invocação da entidade somavec
     soma : ENTITY work.somavec
 		GENERIC MAP(
 			size => size
@@ -36,8 +43,8 @@ BEGIN
             a => a,
             b => b,
             cin => '0',
-            cout => OPEN,
-            sum => soma_sig
+            cout => OPEN, -- o carry é ignorado
+            sum => soma_sig -- o resultado é armazenado em um signal
         );
 		  
 		sub : ENTITY work.sub
@@ -54,28 +61,34 @@ BEGIN
 	 PROCESS (sel, soma_sig, sub_sig, a, b)
     BEGIN
 	 
-		  ng <= output(size-1);
+		  ng <= output(size-1); -- primeiro bit (signed)
 		  
+        -- case com as operações da ula
         CASE sel IS
+            -- soma
             WHEN "0000" =>
                 output_sig <= soma_sig;
-					 
-				WHEN "0001" =>
-                output_sig <= sub_sig;
-					 ng <= ng_sig;
-					 
-				WHEN "0010" =>
-                output_sig <= a xor b;
-					 
-				WHEN "0011" => 
-					 output_sig <= a;
-					 
-				WHEN "0100" => 
-					 output_sig <= b;
-					 
-				WHEN "0101" =>
-                output_sig <= a and b;
+            
+            -- subtração
+            WHEN "0001" =>
+            output_sig <= sub_sig;
+                    ng <= ng_sig;
+                    
+            -- xor
+            WHEN "0010" =>
+            output_sig <= a xor b;
+                    
+            -- retorna a
+            WHEN "0011" => 
+                    output_sig <= a;
 
+            -- retorna b        
+            WHEN "0100" => 
+                    output_sig <= b;
+
+            -- and        
+            WHEN "0101" =>
+            output_sig <= a and b;
 
             WHEN OTHERS =>
                 output_sig <= (OTHERS => '0');

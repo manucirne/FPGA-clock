@@ -1,3 +1,7 @@
+-- David Fogelman
+-- Manoela Campos
+-- Wesley Gabriel
+
 library IEEE;
 use ieee.std_logic_1164.all;
 

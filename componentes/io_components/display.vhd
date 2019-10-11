@@ -1,3 +1,7 @@
+-- David Fogelman
+-- Manoela Campos
+-- Wesley Gabriel
+
 library ieee;
 use ieee.std_logic_1164.all;
 
@@ -16,14 +20,17 @@ architecture comportamento of display is
 begin
     process(clock)
     begin 
+    -- se o clock está na borda de subida
 	 if(rising_edge(clock)) then
+        -- se estiver habilitada a escrita
         if(write_enable = '1') then
+            -- escreve a memória para o display
             data_mem <= data_write(3 downto 0);
         end if;
 		end if;
     end process;
 	 
-
+-- conversor hexadecimal
 conversor : ENTITY work.conversorHex7Seg
 	  PORT MAP(
 	  dadoHex => data_mem,
